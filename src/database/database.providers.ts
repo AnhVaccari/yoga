@@ -1,6 +1,6 @@
-import { Difficulty } from 'src/entity/difficulty.entity';
 import { DataSource } from 'typeorm';
 import DatabaseLogger from './logger';
+import { Difficulty } from 'src/difficulties/entities/difficulty.entity';
 
 export const databaseProviders = [
   {

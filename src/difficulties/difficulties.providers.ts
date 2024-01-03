@@ -1,9 +1,9 @@
 import { DataSource } from 'typeorm';
-import { Difficulty } from '../../entity/difficulty.entity';
+import { Difficulty } from './entities/difficulty.entity';
 
-export const difficultyProviders = [
+export const difficultiesProviders = [
   {
-    provide: 'DIFFICULTY_REPOSITORY',
+    provide: 'DIFFICULTIES_REPOSITORY',
     useFactory: (dataSource: DataSource) =>
       dataSource.getRepository(Difficulty),
     inject: ['DATA_SOURCE'],

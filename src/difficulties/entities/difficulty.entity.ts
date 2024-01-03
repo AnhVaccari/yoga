@@ -5,6 +5,6 @@ export class Difficulty {
   @PrimaryGeneratedColumn()
   difficulty_id: number;
 
-  @Column({ length: 50 })
+  @Column({ length: 500 })
   difficulty_level: string;
 }
