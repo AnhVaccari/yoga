@@ -1,0 +1,75 @@
+@startuml
+' hide the spot
+' hide circle
+
+' avoid problems with angled crows feet
+skinparam linetype ortho
+
+entity "Users" as users {
+  *user_id : INTEGER NOT NUL [PK]
+  --
+  username : VARCHAR(50)
+  email : VARCHAR(255)
+  password : text
+  date_joined: date
+}
+
+entity "Pose" as pose {
+  *pose_id : INTEGER NOT NUL [PK]
+  --
+  sanskrit_name : VARCHAR(50)
+  english_name : VARCHAR(50)
+  description: text
+  benefits : VARCHAR(100)
+  img_url_svg : VARCHAR(255)
+  img_url_jpg : VARCHAR(255)
+  img_url_svg_alt : VARCHAR(255)
+}
+
+entity "Category" as category {
+  *category_id : INTEGER NOT NUL [PK]
+  --
+  category_name : VARCHAR(50)
+  short_name : VARCHAR(50)
+  description : text
+}
+
+entity "Difficulty" as difficulty {
+  *difficulty_id : INTEGER NOT NUL [PK]
+  --
+  difficulty_level : VARCHAR(50)
+}
+
+entity "Sessions" as sessions {
+  *session_id : INTEGER NOT NUL [PK]
+  --
+  title : VARCHAR(255)
+  description : text
+  duration : time
+}
+
+entity "SessionCustom" as sessionCustom {
+  *session_custom_id : INTEGER NOT NUL [PK]
+  --
+  title : VARCHAR(255)
+  description : text
+  duration : time
+}
+
+class "Launch" as launch {
+  *id : INTEGER NOT NUL [PK]
+  --
+  start_date : date
+  end_date : date
+}
+
+users }o---o{ sessions : Participates In
+users }o--|| sessionCustom : Custom Session
+sessions }|---|{ pose : Includes Poses
+sessions ||--o{ difficulty : Has Difficulty
+pose }o--o{ category : Belongs To Category
+
+users }--o{ launch : Participates In
+sessions }--o{ launch : Included In
+
+@enduml
