@@ -17,7 +17,7 @@ export class SessionCustomService {
 
   async getSessionCustom(id: number): Promise<SessionCustom> {
     return this.sessionCustomRepository.findOne({
-      where: { session_custom_id: id },
+      where: { id: id },
     });
   }
 
@@ -41,20 +41,17 @@ export class SessionCustomService {
       duration: Number(duration),
     };
 
-    await this.sessionCustomRepository.update(
-      { session_custom_id: id },
-      updatedSessionCustom,
-    );
+    await this.sessionCustomRepository.update({ id: id }, updatedSessionCustom);
 
     return this.sessionCustomRepository.findOne({
-      where: { session_custom_id: id },
+      where: { id: id },
     });
   }
 
   async removeSessionCustom(id: number): Promise<SessionCustom> {
-    await this.sessionCustomRepository.softDelete({ session_custom_id: id });
+    await this.sessionCustomRepository.softDelete({ id: id });
     return this.sessionCustomRepository.findOne({
-      where: { session_custom_id: id },
+      where: { id: id },
     });
   }
 }

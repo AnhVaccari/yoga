@@ -1,16 +1,18 @@
+import { Pose } from 'src/poses/entities/pose.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  JoinColumn,
+  ManyToMany,
+  JoinTable,
 } from 'typeorm';
 
 @Entity()
 export class SessionCustom {
   @PrimaryGeneratedColumn()
-  session_custom_id: number;
+  id: number;
 
   @Column({ length: 500 })
   title: string;
@@ -21,7 +23,13 @@ export class SessionCustom {
   @Column('int')
   duration: number;
 
-  @ManyToOne(() => User, (user) => user.sessionCustom)
-  @JoinColumn({ name: 'user_id' })
+  @ManyToOne(() => User, (user: User) => user.sessionCustoms)
   user: User;
+
+  @ManyToMany(() => Pose, (pose: Pose) => pose.sessionCustoms, {
+    eager: false,
+    cascade: true,
+  })
+  @JoinTable({ name: 'SessionCustomPoses' })
+  poses: Pose[];
 }

@@ -1,6 +1,5 @@
 import { DataSource } from 'typeorm';
 import DatabaseLogger from './logger';
-import { Difficulty } from 'src/difficulties/entities/difficulty.entity';
 
 export const databaseProviders = [
   {
@@ -13,10 +12,11 @@ export const databaseProviders = [
         username: process.env.TYPEORM_USER || 'root',
         password: process.env.TYPEORM_PASS || '',
         database: process.env.TYPEORM_DB || 'yoga',
-        entities: [Difficulty],
-        synchronize: Boolean(process.env.TYPEORM_SYNC) || false,
-        debug: Boolean(process.env.TYPEORM_DEBUG) || false,
-        logging: Boolean(process.env.TYPEORM_LOGS) || false,
+        entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+        synchronize:
+          process.env.TYPEORM_SYNC === 'true' ? true : false || false,
+        debug: process.env.TYPEORM_DEBUG === 'true' ? true : false || false,
+        logging: process.env.TYPEORM_LOGS === 'true' ? true : false || false,
         logger: new DatabaseLogger(),
       });
 

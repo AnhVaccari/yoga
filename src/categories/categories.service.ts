@@ -12,6 +12,6 @@ export class CategoriesService {
   }
 
   async getCategory(id: number): Promise<Category> {
-    return this.categoriesRepository.findOne({ where: { category_id: id } });
+    return this.categoriesRepository.findOne({ where: { id: id } });
   }
 }

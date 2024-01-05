@@ -11,6 +11,6 @@ export class SessionService {
     return this.sessionRepository.find();
   }
   async getSession(id: number): Promise<Session> {
-    return this.sessionRepository.findOne({ where: { session_id: id } });
+    return this.sessionRepository.findOne({ where: { id: id } });
   }
 }

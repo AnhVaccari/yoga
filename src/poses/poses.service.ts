@@ -14,6 +14,6 @@ export class PosesService {
   }
 
   async getPose(id: number) {
-    return this.posesRepository.findOne({ where: { pose_id: id } });
+    return this.posesRepository.findOne({ where: { id: id } });
   }
 }

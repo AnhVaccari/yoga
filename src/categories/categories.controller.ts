@@ -10,7 +10,7 @@ import { Category } from './entities/category.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
-@Controller('categories')
+@Controller('category')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
 

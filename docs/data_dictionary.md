@@ -4,7 +4,7 @@
 
 | Field           | Type         | Constraints | Description                                                                       |
 | --------------- | ------------ | ----------- | --------------------------------------------------------------------------------- |
-| pose_id         | INTEGER      | PK          | Unique identifier for the pose (primary key)                                      |
+| id              | INTEGER      | PK          | Unique identifier for the pose (primary key)                                      |
 | sanskrit_name   | VARCHAR(50)  | NN UNIQUE   | Sanskrit name of the pose, string up to 50 characters, non-null, unique           |
 | english_name    | VARCHAR(50)  | NN UNIQUE   | English name of the pose, string up to 50 characters, non-null, unique            |
 | description     | TEXT         | NN          | Detailed description of the pose, text, non-null                                  |
@@ -17,7 +17,7 @@
 
 | Field         | Type        | Constraints | Description                                                              |
 | ------------- | ----------- | ----------- | ------------------------------------------------------------------------ |
-| category_id   | INTEGER     | PK          | Unique identifier for the category (primary key)                         |
+| id            | INTEGER     | PK          | Unique identifier for the category (primary key)                         |
 | category_name | VARCHAR(50) | NN UNIQUE   | Name of the category, string up to 50 characters, non-null, unique       |
 | short_name    | VARCHAR(50) | NN UNIQUE   | Short name of the category, string up to 50 characters, non-null, unique |
 | description   | TEXT        | NN          | Detailed description of the category, text, non-null                     |
@@ -34,14 +34,14 @@
 
 | Field            | Type        | Constraints | Description                                              |
 | ---------------- | ----------- | ----------- | -------------------------------------------------------- |
-| difficulty_id    | INTEGER     | PK          | Unique identifier for the difficulty level (primary key) |
+| id               | INTEGER     | PK          | Unique identifier for the difficulty level (primary key) |
 | difficulty_level | VARCHAR(50) | NN          | Difficulty level, string up to 50 characters, non-null   |
 
 ### USER (`user`)
 
 | Field       | Type         | Constraints | Description                                                         |
 | ----------- | ------------ | ----------- | ------------------------------------------------------------------- |
-| user_id     | INTEGER      | PK          | Unique identifier for the user (primary key)                        |
+| id          | INTEGER      | PK          | Unique identifier for the user (primary key)                        |
 | username    | VARCHAR(50)  | NN UNIQUE   | User's username, string up to 50 characters, non-null, unique       |
 | email       | VARCHAR(255) | NN UNIQUE   | User's email address, string up to 255 characters, non-null, unique |
 | password    | VARCHAR(255) | NN          | User's password, string up to 255 characters, non-null              |
@@ -49,21 +49,20 @@
 
 ### SESSION (`session`)
 
-| Field         | Type         | Constraints | Description                                                                 |
-| ------------- | ------------ | ----------- | --------------------------------------------------------------------------- | --- |
-| session_id    | INTEGER      | PK          | Unique identifier for the session (primary key)                             |
-| title         | VARCHAR(255) |             | Title of the session, string up to 255 characters                           |
-| description   | TEXT         |             | Detailed description of the session, text                                   |
-| duration      | TIME         |             | Estimated duration of the session in HH:MM:SS format                        |     |
-| difficulty_id | INTEGER      | PK, FK      | Associated difficulty level identifier (foreign key referencing DIFFICULTY) |
+| Field       | Type         | Constraints | Description                                          |
+| ----------- | ------------ | ----------- | ---------------------------------------------------- | --- |
+| id          | INTEGER      | PK          | Unique identifier for the session (primary key)      |
+| title       | VARCHAR(255) |             | Title of the session, string up to 255 characters    |
+| description | TEXT         |             | Detailed description of the session, text            |
+| duration    | TIME         |             | Estimated duration of the session in HH:MM:SS format |     |
 
 ### SESSIONCUSTOM (`sessionCustom`)
 
-| Field             | Type         | Constraints | Description                                                                 |
-| ----------------- | ------------ | ----------- | --------------------------------------------------------------------------- |
-| session_custom_id | INTEGER      | PK          | Unique identifier for the custom session (primary key)                      |
-| title             | VARCHAR(255) |             | Title of the custom session, string up to 255 characters                    |
-| description       | TEXT         |             | Detailed description of the custom session, text                            |
-| duration          | TIME         |             | Estimated duration of the session in HH:MM:SS format                        |
-| difficulty_id     | INTEGER      | PK, FK      | Associated difficulty level identifier (foreign key referencing DIFFICULTY) |
-| user_id           | INTEGER      | PK, FK      | Associated user identifier ( foreign key referencing USERS)                 |
+| Field         | Type         | Constraints | Description                                                                 |
+| ------------- | ------------ | ----------- | --------------------------------------------------------------------------- |
+| id            | INTEGER      | PK          | Unique identifier for the custom session (primary key)                      |
+| title         | VARCHAR(255) |             | Title of the custom session, string up to 255 characters                    |
+| description   | TEXT         |             | Detailed description of the custom session, text                            |
+| duration      | TIME         |             | Estimated duration of the session in HH:MM:SS format                        |
+| difficulty_id | INTEGER      | PK, FK      | Associated difficulty level identifier (foreign key referencing DIFFICULTY) |
+| user_id       | INTEGER      | PK, FK      | Associated user identifier ( foreign key referencing USERS)                 |

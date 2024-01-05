@@ -7,9 +7,13 @@ import { DifficultiesModule } from './difficulties/difficulties.module';
 import { SessionModule } from './session/session.module';
 import { UserModule } from './user/user.module';
 import { PosesModule } from './poses/poses.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
     CategoriesModule,
     SessionCustomModule,
     DifficultiesModule,

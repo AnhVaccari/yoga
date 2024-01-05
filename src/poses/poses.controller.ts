@@ -10,7 +10,7 @@ import { Pose } from './entities/pose.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
-@Controller('poses')
+@Controller('pose')
 export class PosesController {
   constructor(private readonly posesService: PosesService) {}
 

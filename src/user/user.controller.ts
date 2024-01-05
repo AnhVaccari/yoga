@@ -20,7 +20,7 @@ import { User } from './entities/user.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
-@Controller('users')
+@Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

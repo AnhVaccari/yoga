@@ -1,10 +1,18 @@
+import { Session } from 'src/session/entities/session.entity';
 import { SessionCustom } from 'src/session_custom/entities/session_custom.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  ManyToMany,
+  JoinTable,
+} from 'typeorm';
 
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  user_id: number;
+  id: number;
 
   @Column({ length: 500 })
   username: string;
@@ -15,9 +23,19 @@ export class User {
   @Column('text')
   password: string;
 
-  @Column('timestamp')
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   date_joined: Date;
 
-  @OneToMany(() => SessionCustom, (sessionCustom) => sessionCustom.user)
-  sessionCustom: SessionCustom[];
+  @OneToMany(
+    () => SessionCustom,
+    (sessionCustom: SessionCustom) => sessionCustom.user,
+    { eager: true, cascade: true },
+  )
+  sessionCustoms: SessionCustom[];
+
+  @ManyToMany(() => Session, (session: Session) => session.users, {
+    eager: true,
+  })
+  @JoinTable({ name: 'LaunchedSessions' })
+  sessions: Session[];
 }

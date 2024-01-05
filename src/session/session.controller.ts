@@ -10,7 +10,7 @@ import { Session } from './entities/session.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
-@Controller('sessions')
+@Controller('session')
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}
 
