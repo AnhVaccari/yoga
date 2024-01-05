@@ -1,26 +1,19 @@
-import { Injectable } from '@nestjs/common';
-import { CreatePoseDto } from './dto/create-pose.dto';
-import { UpdatePoseDto } from './dto/update-pose.dto';
+import { Injectable, Inject } from '@nestjs/common';
+import { Pose } from './entities/pose.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class PosesService {
-  create(createPoseDto: CreatePoseDto) {
-    return 'This action adds a new pose';
+  constructor(
+    @Inject('POSES_REPOSITORY')
+    private posesRepository: Repository<Pose>,
+  ) {}
+
+  async getPoses(): Promise<Pose[]> {
+    return this.posesRepository.find();
   }
 
-  findAll() {
-    return `This action returns all poses`;
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} pose`;
-  }
-
-  update(id: number, updatePoseDto: UpdatePoseDto) {
-    return `This action updates a #${id} pose`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} pose`;
+  async getPose(id: number) {
+    return this.posesRepository.findOne({ where: { pose_id: id } });
   }
 }

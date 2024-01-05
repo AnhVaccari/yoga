@@ -6,6 +6,7 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { DifficultiesService } from './difficulties.service';
+import { Difficulty } from './entities/difficulty.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -18,9 +19,9 @@ export class DifficultiesController {
   @ApiResponse({
     status: 200,
     description: 'List of difficulty levels',
-    type: [DifficultiesService],
+    type: [Difficulty],
   })
-  async getDifficulties() {
+  async getAllDifficulties() {
     return this.difficultiesService.getDifficulties();
   }
 }

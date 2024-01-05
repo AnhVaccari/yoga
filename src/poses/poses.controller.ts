@@ -1,34 +1,38 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Param } from '@nestjs/common';
 import { PosesService } from './poses.service';
-import { CreatePoseDto } from './dto/create-pose.dto';
-import { UpdatePoseDto } from './dto/update-pose.dto';
+import {
+  ApiBearerAuth,
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+} from '@nestjs/swagger';
+import { Pose } from './entities/pose.entity';
 
+@ApiBearerAuth()
+@ApiTags('yoga')
 @Controller('poses')
 export class PosesController {
   constructor(private readonly posesService: PosesService) {}
 
-  @Post()
-  create(@Body() createPoseDto: CreatePoseDto) {
-    return this.posesService.create(createPoseDto);
-  }
-
   @Get()
-  findAll() {
-    return this.posesService.findAll();
+  @ApiOperation({ summary: 'Get all poses' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of poses',
+    type: [Pose],
+  })
+  async getAllPoses() {
+    return this.posesService.getPoses();
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.posesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePoseDto: UpdatePoseDto) {
-    return this.posesService.update(+id, updatePoseDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.posesService.remove(+id);
+  @ApiOperation({ summary: 'Get one pose' })
+  @ApiResponse({
+    status: 200,
+    description: 'One pose',
+    type: [Pose],
+  })
+  async getOnePose(@Param('id') id: string) {
+    return this.posesService.getPose(+id);
   }
 }

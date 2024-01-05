@@ -1,26 +1,60 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Inject } from '@nestjs/common';
 import { CreateSessionCustomDto } from './dto/create-session_custom.dto';
 import { UpdateSessionCustomDto } from './dto/update-session_custom.dto';
+import { Repository } from 'typeorm';
+import { SessionCustom } from './entities/session_custom.entity';
 
 @Injectable()
 export class SessionCustomService {
-  create(createSessionCustomDto: CreateSessionCustomDto) {
-    return 'This action adds a new sessionCustom';
+  constructor(
+    @Inject('SESSION_CUSTOM_REPOSITORY')
+    private sessionCustomRepository: Repository<SessionCustom>,
+  ) {}
+
+  async getSessionCustoms(): Promise<SessionCustom[]> {
+    return this.sessionCustomRepository.find();
   }
 
-  findAll() {
-    return `This action returns all sessionCustom`;
+  async getSessionCustom(id: number): Promise<SessionCustom> {
+    return this.sessionCustomRepository.findOne({
+      where: { session_custom_id: id },
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} sessionCustom`;
+  async createSessionCustom(
+    createSessionCustomDto: CreateSessionCustomDto,
+  ): Promise<SessionCustom> {
+    const sessionCustom = this.sessionCustomRepository.create({
+      ...createSessionCustomDto,
+      duration: Number(createSessionCustomDto.duration),
+    });
+    return this.sessionCustomRepository.save(sessionCustom);
   }
 
-  update(id: number, updateSessionCustomDto: UpdateSessionCustomDto) {
-    return `This action updates a #${id} sessionCustom`;
+  async updateSessionCustom(
+    id: number,
+    updateSessionCustomDto: UpdateSessionCustomDto,
+  ): Promise<SessionCustom> {
+    const { duration, ...rest } = updateSessionCustomDto;
+    const updatedSessionCustom = {
+      ...rest,
+      duration: Number(duration),
+    };
+
+    await this.sessionCustomRepository.update(
+      { session_custom_id: id },
+      updatedSessionCustom,
+    );
+
+    return this.sessionCustomRepository.findOne({
+      where: { session_custom_id: id },
+    });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} sessionCustom`;
+  async removeSessionCustom(id: number): Promise<SessionCustom> {
+    await this.sessionCustomRepository.softDelete({ session_custom_id: id });
+    return this.sessionCustomRepository.findOne({
+      where: { session_custom_id: id },
+    });
   }
 }
