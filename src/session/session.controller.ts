@@ -1,4 +1,4 @@
-import { SessionsService } from './sessions.service';
+import { SessionService } from './session.service';
 import { Controller, Get, Param } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -6,23 +6,23 @@ import {
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
-import { Sessions } from './entities/sessions.entity';
+import { Session } from './entities/session.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
 @Controller('sessions')
-export class SessionsController {
-  constructor(private readonly sessionsService: SessionsService) {}
+export class SessionController {
+  constructor(private readonly sessionService: SessionService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all sessions' })
   @ApiResponse({
     status: 200,
     description: 'List of sessions',
-    type: [Sessions],
+    type: [Session],
   })
   async getAllSessions() {
-    return this.sessionsService.getSessions();
+    return this.sessionService.getSessions();
   }
 
   @Get(':id')
@@ -30,9 +30,9 @@ export class SessionsController {
   @ApiResponse({
     status: 200,
     description: 'One session',
-    type: [Sessions],
+    type: [Session],
   })
   async getOneSession(@Param('id') id: string) {
-    return this.sessionsService.getSession(+id);
+    return this.sessionService.getSession(+id);
   }
 }

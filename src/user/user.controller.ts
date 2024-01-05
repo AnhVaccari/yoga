@@ -7,7 +7,7 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import {
@@ -16,23 +16,23 @@ import {
   ApiOperation,
   ApiResponse,
 } from '@nestjs/swagger';
-import { Users } from './entities/user.entity';
+import { User } from './entities/user.entity';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
 @Controller('users')
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+export class UserController {
+  constructor(private readonly userService: UserService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all users' })
   @ApiResponse({
     status: 200,
     description: 'List of users',
-    type: [Users],
+    type: [User],
   })
   async getAllUsers() {
-    return this.usersService.getUsers();
+    return this.userService.getUsers();
   }
 
   @Get(':id')
@@ -40,10 +40,10 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'One user',
-    type: [Users],
+    type: [User],
   })
   async getOneUser(@Param('id') id: string) {
-    return this.usersService.getUser(+id);
+    return this.userService.getUser(+id);
   }
 
   @Post()
@@ -51,10 +51,10 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'Create user',
-    type: [Users],
+    type: [User],
   })
   async create(@Body() createUserDto: CreateUserDto) {
-    return this.usersService.createUser(createUserDto);
+    return this.userService.createUser(createUserDto);
   }
 
   @Patch(':id')
@@ -62,10 +62,10 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'Update user',
-    type: [Users],
+    type: [User],
   })
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.updateUser(+id, updateUserDto);
+    return this.userService.updateUser(+id, updateUserDto);
   }
 
   @Delete(':id')
@@ -73,9 +73,9 @@ export class UsersController {
   @ApiResponse({
     status: 200,
     description: 'Delete user',
-    type: [Users],
+    type: [User],
   })
   async delete(@Param('id') id: string) {
-    return this.usersService.deleteUser(+id);
+    return this.userService.deleteUser(+id);
   }
 }

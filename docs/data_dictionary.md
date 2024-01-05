@@ -37,7 +37,7 @@
 | difficulty_id    | INTEGER     | PK          | Unique identifier for the difficulty level (primary key) |
 | difficulty_level | VARCHAR(50) | NN          | Difficulty level, string up to 50 characters, non-null   |
 
-### USERS (`users`)
+### USER (`user`)
 
 | Field       | Type         | Constraints | Description                                                         |
 | ----------- | ------------ | ----------- | ------------------------------------------------------------------- |
@@ -47,7 +47,7 @@
 | password    | VARCHAR(255) | NN          | User's password, string up to 255 characters, non-null              |
 | date_joined | DATE         | NN          | Date when the user joined the application, in date format, non-null |
 
-### SESSIONS (`sessions`)
+### SESSION (`session`)
 
 | Field         | Type         | Constraints | Description                                                                 |
 | ------------- | ------------ | ----------- | --------------------------------------------------------------------------- | --- |

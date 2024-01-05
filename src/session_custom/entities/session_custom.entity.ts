@@ -1,4 +1,11 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/user/entities/user.entity';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  JoinColumn,
+} from 'typeorm';
 
 @Entity()
 export class SessionCustom {
@@ -14,6 +21,7 @@ export class SessionCustom {
   @Column('int')
   duration: number;
 
-  @Column('int')
-  user_id: number;
+  @ManyToOne(() => User, (user) => user.sessionCustom)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 }
