@@ -6,7 +6,7 @@ import {
   ManyToMany,
   JoinTable,
 } from 'typeorm';
-@Entity()
+@Entity({ name: 'category' })
 export class Category {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,6 +18,6 @@ export class Category {
   description: string;
 
   @ManyToMany(() => Pose, (pose: Pose) => pose.categories)
-  @JoinTable({ name: 'PoseCategories' })
+  @JoinTable({ name: 'pose_category' })
   poses: Pose[];
 }

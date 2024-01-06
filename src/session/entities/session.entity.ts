@@ -1,4 +1,5 @@
 import { Difficulty } from 'src/difficulties/entities/difficulty.entity';
+import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
 import { Pose } from 'src/poses/entities/pose.entity';
 import { User } from 'src/user/entities/user.entity';
 import {
@@ -8,9 +9,10 @@ import {
   ManyToMany,
   JoinTable,
   ManyToOne,
+  OneToMany,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'session' })
 export class Session {
   @PrimaryGeneratedColumn()
   id: number;
@@ -28,8 +30,14 @@ export class Session {
     eager: false,
     cascade: true,
   })
-  @JoinTable({ name: 'LaunchedSessions' })
+  @JoinTable({ name: 'launched_session' })
   users: User[];
+
+  @OneToMany(
+    () => LaunchedSession,
+    (launchedSession: LaunchedSession) => launchedSession.session,
+  )
+  launchedSession: LaunchedSession[];
 
   @ManyToOne(
     () => Difficulty,
@@ -42,6 +50,6 @@ export class Session {
     eager: true,
     cascade: true,
   })
-  @JoinTable({ name: 'SessionPoses' })
+  @JoinTable({ name: 'session_pose' })
   poses: Pose[];
 }

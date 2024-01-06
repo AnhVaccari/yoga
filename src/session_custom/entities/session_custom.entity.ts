@@ -9,7 +9,7 @@ import {
   JoinTable,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'session_custom' })
 export class SessionCustom {
   @PrimaryGeneratedColumn()
   id: number;
@@ -30,6 +30,6 @@ export class SessionCustom {
     eager: false,
     cascade: true,
   })
-  @JoinTable({ name: 'SessionCustomPoses' })
+  @JoinTable({ name: 'sessionCustom_pose' })
   poses: Pose[];
 }

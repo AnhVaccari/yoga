@@ -2,7 +2,7 @@ import { Pose } from 'src/poses/entities/pose.entity';
 import { Session } from 'src/session/entities/session.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'difficulty' })
 export class Difficulty {
   @PrimaryGeneratedColumn()
   id: number;

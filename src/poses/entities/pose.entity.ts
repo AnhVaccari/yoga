@@ -10,7 +10,7 @@ import {
   JoinTable,
   ManyToOne,
 } from 'typeorm';
-@Entity()
+@Entity({ name: 'pose' })
 export class Pose {
   @PrimaryGeneratedColumn()
   id: number;
@@ -37,11 +37,11 @@ export class Pose {
   img_url_svg_alt: string;
 
   @ManyToMany(() => Session, (session: Session) => session.poses)
-  @JoinTable({ name: 'SessionPoses' })
+  @JoinTable({ name: 'session_pose' })
   sessions: Session[];
 
   @ManyToMany(() => Category, (category: Category) => category.poses)
-  @JoinTable({ name: 'PoseCategories' })
+  @JoinTable({ name: 'pose_category' })
   categories: Category[];
 
   @ManyToOne(() => Difficulty, (difficulty: Difficulty) => difficulty.poses)
@@ -54,6 +54,6 @@ export class Pose {
       eager: true,
     },
   )
-  @JoinTable({ name: 'SessionCustomPoses' })
+  @JoinTable({ name: 'sessionCustom_pose' })
   sessionCustoms: SessionCustom[];
 }
