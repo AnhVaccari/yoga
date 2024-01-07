@@ -8,6 +8,7 @@ import { SessionModule } from './session/session.module';
 import { UserModule } from './user/user.module';
 import { PosesModule } from './poses/poses.module';
 import { ConfigModule } from '@nestjs/config';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ConfigModule } from '@nestjs/config';
     SessionModule,
     UserModule,
     PosesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

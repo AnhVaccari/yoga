@@ -4,8 +4,8 @@
 
 | URL                   | HTTP Method | Controller              | Method   | Content                   |
 | --------------------- | ----------- | ----------------------- | -------- | ------------------------- |
-| `/login`              | `POST`      | AuthController          | `login`  | Login form                |
-| `/logout`             | `POST`      | AuthController          | `logout` | Logout form               |
+| `auth/login`          | `POST`      | AuthController          | `login`  | Login form                |
+| `auth/logout`         | `POST`      | AuthController          | `logout` | Logout form               |
 | `/pose`               | `GET`       | PoseController          | `read`   | List poses                |
 | `/pose/:id`           | `GET`       | PoseController          | `read`   | A specific pose           |
 | `/difficulty`         | `GET`       | DifficultyController    | `read`   | List difficulties         |

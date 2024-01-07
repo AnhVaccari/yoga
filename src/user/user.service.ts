@@ -7,30 +7,34 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(
-    @Inject('USERS_REPOSITORY')
-    private usersRepository: Repository<User>,
+    @Inject('USER_REPOSITORY')
+    private userRepository: Repository<User>,
   ) {}
 
   async getUsers(): Promise<User[]> {
-    return this.usersRepository.find();
+    return this.userRepository.find();
   }
 
   async getUser(id: number): Promise<User> {
-    return this.usersRepository.findOne({ where: { id: id } });
+    return this.userRepository.findOne({ where: { id: id } });
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const user = this.usersRepository.create(createUserDto);
-    return this.usersRepository.save(user);
+    const user = this.userRepository.create(createUserDto);
+    return this.userRepository.save(user);
   }
 
   async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<User> {
-    await this.usersRepository.update({ id: id }, updateUserDto);
-    return this.usersRepository.findOne({ where: { id: id } });
+    await this.userRepository.update({ id: id }, updateUserDto);
+    return this.userRepository.findOne({ where: { id: id } });
   }
 
   async deleteUser(id: number): Promise<User> {
-    await this.usersRepository.softDelete({ id: id });
-    return this.usersRepository.findOne({ where: { id: id } });
+    await this.userRepository.softDelete({ id: id });
+    return this.userRepository.findOne({ where: { id: id } });
+  }
+
+  async findOne(username: string): Promise<User | undefined> {
+    return this.userRepository.findOne({ where: { username: username } });
   }
 }
