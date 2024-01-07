@@ -1,5 +1,5 @@
 import { SessionService } from './session.service';
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -7,9 +7,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { Session } from './entities/session.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
+@UseGuards(JwtAuthGuard)
 @Controller('session')
 export class SessionController {
   constructor(private readonly sessionService: SessionService) {}

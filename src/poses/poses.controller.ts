@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { PosesService } from './poses.service';
 import {
   ApiBearerAuth,
@@ -7,9 +7,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { Pose } from './entities/pose.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
+@UseGuards(JwtAuthGuard)
 @Controller('pose')
 export class PosesController {
   constructor(private readonly posesService: PosesService) {}

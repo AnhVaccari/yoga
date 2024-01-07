@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -7,9 +7,11 @@ import {
 } from '@nestjs/swagger';
 import { DifficultiesService } from './difficulties.service';
 import { Difficulty } from './entities/difficulty.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
+@UseGuards(JwtAuthGuard)
 @Controller('difficulty')
 export class DifficultiesController {
   constructor(private readonly difficultiesService: DifficultiesService) {}

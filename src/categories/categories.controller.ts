@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import {
   ApiBearerAuth,
@@ -7,9 +7,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { Category } from './entities/category.entity';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
+@UseGuards(JwtAuthGuard)
 @Controller('category')
 export class CategoriesController {
   constructor(private readonly categoriesService: CategoriesService) {}
