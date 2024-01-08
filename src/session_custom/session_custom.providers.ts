@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 import { SessionCustom } from './entities/session_custom.entity';
-import { Pose } from 'src/poses/entities/pose.entity';
+import { posesProviders } from '../poses/poses.providers';
+import { userProviders } from '../user/user.providers';
 
 export const sessionCustomProviders = [
   {
@@ -9,9 +10,6 @@ export const sessionCustomProviders = [
       dataSource.getRepository(SessionCustom),
     inject: ['DATA_SOURCE'],
   },
-  {
-    provide: 'POSE_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Pose),
-    inject: ['DATA_SOURCE'],
-  },
+  ...posesProviders,
+  ...userProviders,
 ];

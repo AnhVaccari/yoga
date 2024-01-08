@@ -52,7 +52,6 @@ export class Pose {
     (sessionCustom: SessionCustom) => sessionCustom.poses,
     {
       eager: false,
-      cascade: true,
     },
   )
   @JoinTable({

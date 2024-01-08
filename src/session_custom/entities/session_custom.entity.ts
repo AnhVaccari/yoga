@@ -30,6 +30,7 @@ export class SessionCustom {
 
   @ManyToMany(() => Pose, (pose: Pose) => pose.sessionCustoms, {
     eager: true,
+    cascade: true,
   })
   @JoinTable({
     name: 'sessionCustom_pose',

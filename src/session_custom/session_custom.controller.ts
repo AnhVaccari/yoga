@@ -20,6 +20,10 @@ import {
 } from '@nestjs/swagger';
 import { SessionCustom } from './entities/session_custom.entity';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import {
+  IUserAuthenticated,
+  UserAuthenticated,
+} from 'src/decorators/user-authenticated.decorator';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -35,8 +39,8 @@ export class SessionCustomController {
     description: 'List of session_customs',
     type: [SessionCustom],
   })
-  async getAllSessionCustoms() {
-    return this.sessionCustomService.getSessionCustoms();
+  async getAllSessionCustoms(@UserAuthenticated() user: IUserAuthenticated) {
+    return this.sessionCustomService.getSessionCustoms(user.userId);
   }
 
   @Get(':id')
@@ -46,8 +50,11 @@ export class SessionCustomController {
     description: 'One session_custom',
     type: [SessionCustom],
   })
-  async getSessionCustom(@Param('id') id: string) {
-    return this.sessionCustomService.getSessionCustom(+id);
+  async getSessionCustom(
+    @Param('id') id: string,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ) {
+    return this.sessionCustomService.getSessionCustom(+id, user.userId);
   }
 
   @Post()
@@ -57,9 +64,13 @@ export class SessionCustomController {
     description: 'Create session_custom',
     type: [SessionCustom],
   })
-  async create(@Body() createSessionCustomDto: CreateSessionCustomDto) {
+  async create(
+    @Body() createSessionCustomDto: CreateSessionCustomDto,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ) {
     return this.sessionCustomService.createSessionCustom(
       createSessionCustomDto,
+      user.userId,
     );
   }
 
@@ -73,10 +84,12 @@ export class SessionCustomController {
   async update(
     @Param('id') id: string,
     @Body() updateSessionCustomDto: UpdateSessionCustomDto,
+    @UserAuthenticated() user: IUserAuthenticated,
   ) {
     return this.sessionCustomService.updateSessionCustom(
       +id,
       updateSessionCustomDto,
+      user.userId,
     );
   }
 
@@ -87,8 +100,11 @@ export class SessionCustomController {
     description: 'Delete session_custom',
     type: [SessionCustom],
   })
-  async delete(@Param('id') id: string) {
-    return this.sessionCustomService.removeSessionCustom(+id);
+  async delete(
+    @Param('id') id: string,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ) {
+    return this.sessionCustomService.removeSessionCustom(+id, user.userId);
   }
 
   @Post(':sessionCustomId/poses/:poseId')
@@ -101,10 +117,31 @@ export class SessionCustomController {
   async addPoseToSessionCustom(
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
     @Param('poseId', ParseIntPipe) poseId: number,
+    @UserAuthenticated() user: IUserAuthenticated,
   ): Promise<SessionCustom> {
     return this.sessionCustomService.addPoseToSessionCustom(
       sessionCustomId,
       poseId,
+      user.userId,
+    );
+  }
+
+  @Delete(':sessionCustomId/poses/:poseId')
+  @ApiOperation({ summary: 'Remove pose from session_custom' })
+  @ApiResponse({
+    status: 200,
+    description: 'Remove pose from session_custom',
+    type: [SessionCustom],
+  })
+  async removePoseFromSessionCustom(
+    @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
+    @Param('poseId', ParseIntPipe) poseId: number,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ): Promise<SessionCustom> {
+    return this.sessionCustomService.removePoseFromSessionCustom(
+      sessionCustomId,
+      poseId,
+      user.userId,
     );
   }
 }

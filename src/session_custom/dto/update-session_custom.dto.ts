@@ -1,6 +1,14 @@
-import { PartialType } from '@nestjs/swagger';
-import { CreateSessionCustomDto } from './create-session_custom.dto';
+import { IsOptional, IsNumber, IsPositive } from 'class-validator';
 
-export class UpdateSessionCustomDto extends PartialType(
-  CreateSessionCustomDto,
-) {}
+export class UpdateSessionCustomDto {
+  @IsOptional()
+  title?: string;
+
+  @IsOptional()
+  description?: string;
+
+  @IsOptional()
+  @IsNumber()
+  @IsPositive()
+  duration?: number | null;
+}
