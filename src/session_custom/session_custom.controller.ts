@@ -7,6 +7,7 @@ import {
   Param,
   Delete,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { SessionCustomService } from './session_custom.service';
 import { CreateSessionCustomDto } from './dto/create-session_custom.dto';
@@ -88,5 +89,22 @@ export class SessionCustomController {
   })
   async delete(@Param('id') id: string) {
     return this.sessionCustomService.removeSessionCustom(+id);
+  }
+
+  @Post(':sessionCustomId/poses/:poseId')
+  @ApiOperation({ summary: 'Add pose to session_custom' })
+  @ApiResponse({
+    status: 200,
+    description: 'Add pose to session_custom',
+    type: [SessionCustom],
+  })
+  async addPoseToSessionCustom(
+    @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
+    @Param('poseId', ParseIntPipe) poseId: number,
+  ): Promise<SessionCustom> {
+    return this.sessionCustomService.addPoseToSessionCustom(
+      sessionCustomId,
+      poseId,
+    );
   }
 }

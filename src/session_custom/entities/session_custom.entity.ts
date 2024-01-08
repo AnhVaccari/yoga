@@ -23,13 +23,16 @@ export class SessionCustom {
   @Column('int')
   duration: number;
 
-  @ManyToOne(() => User, (user: User) => user.sessionCustoms)
+  @ManyToOne(() => User, (user: User) => user.sessionCustoms, {
+    eager: true,
+  })
   user: User;
 
   @ManyToMany(() => Pose, (pose: Pose) => pose.sessionCustoms, {
-    eager: false,
-    cascade: true,
+    eager: true,
   })
-  @JoinTable({ name: 'sessionCustom_pose' })
+  @JoinTable({
+    name: 'sessionCustom_pose',
+  })
   poses: Pose[];
 }

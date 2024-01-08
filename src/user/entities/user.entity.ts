@@ -30,7 +30,6 @@ export class User {
   @OneToMany(
     () => SessionCustom,
     (sessionCustom: SessionCustom) => sessionCustom.user,
-    { eager: true, cascade: true },
   )
   sessionCustoms: SessionCustom[];
 

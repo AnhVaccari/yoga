@@ -17,7 +17,9 @@ export class Category {
   @Column('text')
   description: string;
 
-  @ManyToMany(() => Pose, (pose: Pose) => pose.categories)
+  @ManyToMany(() => Pose, (pose: Pose) => pose.categories, {
+    eager: true,
+  })
   @JoinTable({ name: 'pose_category' })
   poses: Pose[];
 }
