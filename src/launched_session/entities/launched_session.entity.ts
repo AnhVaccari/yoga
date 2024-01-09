@@ -4,10 +4,10 @@ import { Session } from 'src/session/entities/session.entity';
 
 @Entity({ name: 'launched_session' })
 export class LaunchedSession {
-  @PrimaryColumn({ type: 'date' })
+  @PrimaryColumn({ type: 'datetime' })
   start_date: Date;
 
-  @Column({ type: 'date', nullable: true })
+  @Column({ type: 'datetime', nullable: true })
   end_date: Date;
 
   // Clé étrangère vers l'entité User

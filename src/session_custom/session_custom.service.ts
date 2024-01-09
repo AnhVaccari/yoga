@@ -10,7 +10,6 @@ import { Repository } from 'typeorm';
 import { SessionCustom } from './entities/session_custom.entity';
 import { Pose } from 'src/poses/entities/pose.entity';
 import { User } from 'src/user/entities/user.entity';
-import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
 
 @Injectable()
 export class SessionCustomService {
@@ -21,8 +20,6 @@ export class SessionCustomService {
     private poseRepository: Repository<Pose>,
     @Inject('USER_REPOSITORY')
     private userRepository: Repository<User>,
-    // @Inject('LAUNCHED_SESSION_REPOSITORY')
-    // private launchedSessionRepository: Repository<LaunchedSession>,
   ) {}
 
   async getSessionCustoms(userId: number): Promise<SessionCustom[]> {
@@ -157,16 +154,4 @@ export class SessionCustomService {
 
     return sessionCustom;
   }
-
-  // async startSessionCustom(sessionCustomId: number, userId: number) {
-  //   const sessionCustom = await this.getSessionCustom(sessionCustomId, userId);
-
-  //   // Créez une nouvelle instance de LaunchedSession
-  //   const launchedSession = new LaunchedSession();
-  //   launchedSession.start_date = new Date();
-  //   launchedSession.user = sessionCustom.user;
-
-  //   await this.launchedSessionRepository.save(launchedSession);
-  //   return sessionCustom;
-  // }
 }

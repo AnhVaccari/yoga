@@ -52,5 +52,4 @@ export class Session {
   })
   @JoinTable({ name: 'session_pose' })
   poses: Pose[];
-  start_date: Date;
 }

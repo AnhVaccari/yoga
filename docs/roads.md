@@ -20,3 +20,5 @@
 | `/user`                                         | `GET`       | SessionCustomController | `read`   | List users                     |
 | `/sessionCustom/:sessionCustomId/poses/:poseId` | `POST`      | UserController          | `create` | Add pose to sessionCustom      |
 | `/sessionCustom/:sessionCustomId/poses/:poseId` | `DELETE`    | SessionCustomController | `delete` | Remove pose from sessionCustom |
+| `/session/:sessionId/start`                     | `POST`      | SessionController       | `start`  | Start a session                |
+| `/session/:sessionId/stop`                      | `POST`      | SessionController       | `stop`   | Stop a session                 |
