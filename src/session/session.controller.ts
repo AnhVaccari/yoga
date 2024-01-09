@@ -1,5 +1,5 @@
 import { SessionService } from './session.service';
-import { Controller, Get, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -36,5 +36,16 @@ export class SessionController {
   })
   async getOneSession(@Param('id') id: string) {
     return this.sessionService.getSession(+id);
+  }
+
+  @Post(':id/start')
+  @ApiOperation({ summary: 'Start a session' })
+  @ApiResponse({
+    status: 200,
+    description: 'Start a session',
+    type: [Session],
+  })
+  async startSession(@Param('id') sessionId: string) {
+    return this.sessionService.startSession(+sessionId);
   }
 }

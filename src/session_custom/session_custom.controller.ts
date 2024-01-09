@@ -144,4 +144,18 @@ export class SessionCustomController {
       user.userId,
     );
   }
+
+  // @Post(':id/start')
+  // @ApiOperation({ summary: 'Start session_custom' })
+  // @ApiResponse({
+  //   status: 200,
+  //   description: 'Start session_custom',
+  //   type: [SessionCustom],
+  // })
+  // async startSessionCustom(
+  //   @Param('id', ParseIntPipe) id: number,
+  //   @UserAuthenticated() user: IUserAuthenticated,
+  // ): Promise<SessionCustom> {
+  //   return this.sessionCustomService.startSessionCustom(id, user.userId);
+  // }
 }
