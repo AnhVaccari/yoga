@@ -15,6 +15,8 @@ export class LaunchedSession {
   user: User;
 
   // Clé étrangère vers l'entité Session
-  @ManyToOne(() => Session, (session: Session) => session.launchedSession)
+  @ManyToOne(() => Session, (session: Session) => session.launchedSession, {
+    eager: true,
+  })
   session: Session;
 }

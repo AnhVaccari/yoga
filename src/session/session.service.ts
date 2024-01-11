@@ -36,7 +36,6 @@ export class SessionService {
 
     const session = await this.sessionRepository.findOne({
       where: { id: sessionId },
-      relations: ['users'],
     });
 
     if (!session) {
@@ -46,14 +45,13 @@ export class SessionService {
     const ongoingSession = await this.launchedSessionRepository.findOne({
       where: {
         end_date: IsNull(),
+        user: { id: userId },
       },
     });
 
     if (ongoingSession) {
       throw new BadRequestException('Une session est déjà en cours');
     }
-
-    session.users = [user];
 
     await this.launchedSessionRepository.save({
       session: session,
@@ -69,7 +67,6 @@ export class SessionService {
     // Effectuer une requête SELECT pour obtenir la version mise à jour de la session
     const updatedSession = await this.sessionRepository.findOne({
       where: { id: sessionId },
-      relations: ['users'],
     });
 
     if (!updatedSession) {
@@ -83,7 +80,6 @@ export class SessionService {
   async stopSession(sessionId: number, userId: number): Promise<Session> {
     const session = await this.sessionRepository.findOne({
       where: { id: sessionId },
-      relations: ['users'],
     });
 
     if (!session) {
@@ -93,6 +89,7 @@ export class SessionService {
     const ongoingSession = await this.launchedSessionRepository.findOne({
       where: {
         end_date: IsNull(),
+        user: { id: userId },
       },
     });
 
@@ -106,7 +103,6 @@ export class SessionService {
     // Effectuer une requête SELECT pour obtenir la version mise à jour de la session
     const updatedSession = await this.sessionRepository.findOne({
       where: { id: sessionId },
-      relations: ['users'],
     });
 
     if (!updatedSession) {

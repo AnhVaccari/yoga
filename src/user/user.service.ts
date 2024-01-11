@@ -12,12 +12,11 @@ export class UserService {
     private userRepository: Repository<User>,
   ) {}
 
-  async getUsers(): Promise<User[]> {
-    return this.userRepository.find();
-  }
-
   async getUser(id: number): Promise<User> {
-    return this.userRepository.findOne({ where: { id: id } });
+    return this.userRepository.findOne({
+      select: ['id', 'username', 'email', 'date_joined'],
+      where: { id: id },
+    });
   }
 
   async createUser(createUserDto: CreateUserDto): Promise<User> {

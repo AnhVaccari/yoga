@@ -17,8 +17,8 @@
 | `/session-custom/:id`                           | `GET`       | SessionCustomController | `edit`   | A specific session custom      |
 | `/session-custom/:id`                           | `PUT`       | SessionCustomController | `edit`   | Update session custom          |
 | `/sessionCustom/:id`                            | `DELETE`    | SessionCustomController | `delete` | Delete session custom          |
-| `/user`                                         | `GET`       | SessionCustomController | `read`   | List users                     |
-| `/sessionCustom/:sessionCustomId/poses/:poseId` | `POST`      | UserController          | `create` | Add pose to sessionCustom      |
+| `/user/profile`                                 | `GET`       | UserController          | `read`   | User profile                   |
+| `/sessionCustom/:sessionCustomId/poses/:poseId` | `POST`      | SessionCustomController | `create` | Add pose to sessionCustom      |
 | `/sessionCustom/:sessionCustomId/poses/:poseId` | `DELETE`    | SessionCustomController | `delete` | Remove pose from sessionCustom |
 | `/session/:sessionId/start`                     | `POST`      | SessionController       | `start`  | Start a session                |
 | `/session/:sessionId/stop`                      | `POST`      | SessionController       | `stop`   | Stop a session                 |

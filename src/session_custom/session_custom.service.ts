@@ -98,7 +98,6 @@ export class SessionCustomService {
     const pose = await this.poseRepository.findOne({
       where: { id: poseId },
     });
-    console.log('Pose:', pose);
     if (!pose) {
       throw new NotFoundException('Pose not found');
     }
@@ -153,5 +152,27 @@ export class SessionCustomService {
     );
 
     return sessionCustom;
+  }
+
+  // async getSessionCustomHistory(userId: number) {
+  //   const sessionCustoms = await this.sessionCustomRepository
+  //     .createQueryBuilder('sessionCustom')
+  //     .leftJoinAndSelect('sessionCustom.poses', 'poses')
+  //     .leftJoinAndSelect('sessionCustom.user', 'user')
+  //     .where('sessionCustom.user = :userId', { userId: userId })
+  //     .orderBy('sessionCustom.createdAt', 'DESC')
+  //     .getMany();
+
+  //   return sessionCustoms;
+  // }
+
+  async getSessionCustomHistory(
+    sessionCustomId: number,
+    userId: number,
+  ): Promise<SessionCustom[]> {
+    return this.sessionCustomRepository.find({
+      where: { user: { id: userId }, id: sessionCustomId },
+      relations: ['poses'],
+    });
   }
 }

@@ -24,7 +24,7 @@ export class SessionCustom {
   duration: number;
 
   @ManyToOne(() => User, (user: User) => user.sessionCustoms, {
-    eager: true,
+    eager: false,
   })
   user: User;
 

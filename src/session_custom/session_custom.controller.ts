@@ -64,6 +64,10 @@ export class SessionCustomController {
     description: 'Create session_custom',
     type: [SessionCustom],
   })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
+  })
   async create(
     @Body() createSessionCustomDto: CreateSessionCustomDto,
     @UserAuthenticated() user: IUserAuthenticated,
@@ -80,6 +84,10 @@ export class SessionCustomController {
     status: 200,
     description: 'Update session_custom',
     type: [SessionCustom],
+  })
+  @ApiResponse({
+    status: 400,
+    description: 'Bad Request',
   })
   async update(
     @Param('id') id: string,
@@ -145,17 +153,19 @@ export class SessionCustomController {
     );
   }
 
-  // @Post(':id/start')
-  // @ApiOperation({ summary: 'Start session_custom' })
-  // @ApiResponse({
-  //   status: 200,
-  //   description: 'Start session_custom',
-  //   type: [SessionCustom],
-  // })
-  // async startSessionCustom(
-  //   @Param('id', ParseIntPipe) id: number,
-  //   @UserAuthenticated() user: IUserAuthenticated,
-  // ): Promise<SessionCustom> {
-  //   return this.sessionCustomService.startSessionCustom(id, user.userId);
-  // }
+  @Get(':sessionCustomId/history')
+  @ApiOperation({ summary: 'Get session_custom history' })
+  @ApiResponse({
+    status: 200,
+    description: 'Get session_custom history',
+  })
+  async getSessionCustomHistory(
+    @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ) {
+    return this.sessionCustomService.getSessionCustomHistory(
+      sessionCustomId,
+      user.userId,
+    );
+  }
 }

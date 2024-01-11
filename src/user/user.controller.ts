@@ -1,16 +1,6 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-  UseGuards,
-} from '@nestjs/common';
+import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import {
   ApiBearerAuth,
   ApiTags,
@@ -18,7 +8,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import {
+  IUserAuthenticated,
+  UserAuthenticated,
+} from '../decorators/user-authenticated.decorator';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -27,26 +21,26 @@ import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Get()
-  @ApiOperation({ summary: 'Get all users' })
+  @Get('profile')
+  @ApiOperation({ summary: 'Get user profil' })
   @ApiResponse({
     status: 200,
-    description: 'List of users',
+    description: 'User profil',
     type: [User],
   })
-  async getAllUsers() {
-    return this.userService.getUsers();
+  async getOneUser(@UserAuthenticated() user: IUserAuthenticated) {
+    return this.userService.getUser(user.userId);
   }
 
-  @Get(':id')
-  @ApiOperation({ summary: 'Get one user' })
+  @Get('history')
+  @ApiOperation({ summary: 'Get history of launched session' })
   @ApiResponse({
     status: 200,
-    description: 'One user',
+    description: 'History of launched session',
     type: [User],
   })
-  async getOneUser(@Param('id') id: string) {
-    return this.userService.getUser(+id);
+  async getHistory(@UserAuthenticated() user: IUserAuthenticated) {
+    return (await this.getOneUser(user)).launchedSession;
   }
 
   @Post()
@@ -56,29 +50,11 @@ export class UserController {
     description: 'Create user',
     type: [User],
   })
+  @ApiResponse({
+    status: 409,
+    description: 'User already exists',
+  })
   async create(@Body() createUserDto: CreateUserDto) {
     return this.userService.createUser(createUserDto);
-  }
-
-  @Patch(':id')
-  @ApiOperation({ summary: 'Update user' })
-  @ApiResponse({
-    status: 200,
-    description: 'Update user',
-    type: [User],
-  })
-  async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.updateUser(+id, updateUserDto);
-  }
-
-  @Delete(':id')
-  @ApiOperation({ summary: 'Delete user' })
-  @ApiResponse({
-    status: 200,
-    description: 'Delete user',
-    type: [User],
-  })
-  async delete(@Param('id') id: string) {
-    return this.userService.deleteUser(+id);
   }
 }

@@ -1,14 +1,6 @@
 import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
-import { Session } from 'src/session/entities/session.entity';
 import { SessionCustom } from 'src/session_custom/entities/session_custom.entity';
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToMany,
-  ManyToMany,
-  JoinTable,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'user' })
 export class User {
@@ -33,15 +25,10 @@ export class User {
   )
   sessionCustoms: SessionCustom[];
 
-  @ManyToMany(() => Session, (session: Session) => session.users, {
-    eager: true,
-  })
-  @JoinTable({ name: 'launched_session' })
-  sessions: Session[];
-
   @OneToMany(
     () => LaunchedSession,
     (launchedSession: LaunchedSession) => launchedSession.user,
+    { eager: true },
   )
   launchedSession: LaunchedSession[];
 }
