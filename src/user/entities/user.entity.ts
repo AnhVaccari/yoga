@@ -1,3 +1,4 @@
+import { IsEmail } from 'class-validator';
 import { LaunchedSession } from '../../launched_session/entities/launched_session.entity';
 import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
@@ -7,16 +8,21 @@ export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 500 })
+  @Column({ length: 255, unique: true })
   username: string;
 
-  @Column({ length: 500 })
+  @Column({ length: 255, unique: true })
+  @IsEmail()
   email: string;
 
   @Column('text')
   password: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  @Column({
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
+    readonly: true,
+  })
   date_joined: Date;
 
   @OneToMany(
