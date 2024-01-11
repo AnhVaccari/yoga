@@ -1,6 +1,6 @@
-import { Difficulty } from 'src/difficulties/entities/difficulty.entity';
-import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
-import { Pose } from 'src/poses/entities/pose.entity';
+import { Difficulty } from '../../difficulties/entities/difficulty.entity';
+import { LaunchedSession } from '../../launched_session/entities/launched_session.entity';
+import { Pose } from '../../poses/entities/pose.entity';
 import {
   Entity,
   Column,

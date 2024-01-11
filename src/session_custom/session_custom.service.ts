@@ -8,8 +8,8 @@ import { CreateSessionCustomDto } from './dto/create-session_custom.dto';
 import { UpdateSessionCustomDto } from './dto/update-session_custom.dto';
 import { Repository } from 'typeorm';
 import { SessionCustom } from './entities/session_custom.entity';
-import { Pose } from 'src/poses/entities/pose.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Pose } from '../poses/entities/pose.entity';
+import { User } from '../user/entities/user.entity';
 
 @Injectable()
 export class SessionCustomService {

@@ -7,7 +7,7 @@ import {
 } from '@nestjs/swagger';
 import { DifficultiesService } from './difficulties.service';
 import { Difficulty } from './entities/difficulty.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')

@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { IsNull, Repository } from 'typeorm';
 import { Session } from './entities/session.entity';
-import { User } from 'src/user/entities/user.entity';
-import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
+import { User } from '../user/entities/user.entity';
+import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
 @Injectable()
 export class SessionService {
   constructor(

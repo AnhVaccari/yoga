@@ -19,11 +19,11 @@ import {
   ApiResponse,
 } from '@nestjs/swagger';
 import { SessionCustom } from './entities/session_custom.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import {
   IUserAuthenticated,
   UserAuthenticated,
-} from 'src/decorators/user-authenticated.decorator';
+} from '../decorators/user-authenticated.decorator';
 
 @ApiBearerAuth()
 @ApiTags('yoga')

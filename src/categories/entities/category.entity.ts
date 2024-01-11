@@ -1,4 +1,4 @@
-import { Pose } from 'src/poses/entities/pose.entity';
+import { Pose } from '../../poses/entities/pose.entity';
 import {
   Entity,
   Column,

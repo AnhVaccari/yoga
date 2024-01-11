@@ -1,5 +1,5 @@
-import { LaunchedSession } from 'src/launched_session/entities/launched_session.entity';
-import { SessionCustom } from 'src/session_custom/entities/session_custom.entity';
+import { LaunchedSession } from '../../launched_session/entities/launched_session.entity';
+import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
 @Entity({ name: 'user' })
