@@ -1,0 +1,30 @@
+on: push
+name: CI
+jobs:
+  build:
+    name: Build, Test and Analyze
+    runs-on: ubuntu-latest
+    steps:
+      - name: Load repository
+        uses: actions/checkout@master
+        with:
+          persist-credentials: false
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: 'npm'
+      - name: Run tests
+        timeout-minutes: 30
+        run: |
+          npm ci
+          npm run test-e2e:ci
+          npm run test:ci
+      - name: Fix code coverage paths
+        working-directory: ./coverage
+        run: sed -i 's/\/home\/runner\/work\/yoga\/yoga\//\/github\/workspace\//g' lcov.info
+#      - name: Analyze with SonarCloud
+#        uses: sonarsource/sonarcloud-github-action@master
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
