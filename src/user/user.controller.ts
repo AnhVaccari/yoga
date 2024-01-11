@@ -1,4 +1,13 @@
-import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  UseGuards,
+  NotFoundException,
+  ConflictException,
+  BadRequestException
+} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
@@ -13,9 +22,11 @@ import {
   IUserAuthenticated,
   UserAuthenticated,
 } from '../decorators/user-authenticated.decorator';
+import {LaunchedSession} from "../launched_session/entities/launched_session.entity";
+import {validate} from "class-validator";
 
 @ApiBearerAuth()
-@ApiTags('yoga')
+@ApiTags('user')
 @UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {
@@ -29,7 +40,11 @@ export class UserController {
     type: [User],
   })
   async getOneUser(@UserAuthenticated() user: IUserAuthenticated) {
-    return this.userService.getUser(user.userId);
+    const foundUser = await this.userService.getUser(user.userId);
+    if (!foundUser) {
+      throw new NotFoundException('User not found');
+    }
+    return foundUser;
   }
 
   @Get('history')
@@ -37,10 +52,11 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'History of launched session',
-    type: [User],
+    type: [LaunchedSession],
   })
   async getHistory(@UserAuthenticated() user: IUserAuthenticated) {
-    return (await this.getOneUser(user)).launchedSession;
+    const userData = await this.getOneUser(user);
+    return userData.launchedSession;
   }
 
   @Post()
@@ -55,6 +71,14 @@ export class UserController {
     description: 'User already exists',
   })
   async create(@Body() createUserDto: CreateUserDto) {
+    const existingUser = await this.userService.findOne(createUserDto.username);
+    if (existingUser) {
+      throw new ConflictException('User already exists');
+    }
+    const validationErrors = await validate(createUserDto);
+    if (validationErrors.length > 0) {
+      throw new BadRequestException(validationErrors);
+    }
     return this.userService.createUser(createUserDto);
   }
 }
