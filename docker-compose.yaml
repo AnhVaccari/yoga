@@ -1,0 +1,43 @@
+version: '3.8'
+
+networks:
+  yoga-app-network:
+    driver: bridge
+
+services:
+  db:
+    image: mysql:8.0
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=yoga
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "3306:3306"
+    networks:
+      - yoga-app-network
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - yoga-app-network
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; npm run start:debug'
+    depends_on:
+      - db
+    networks:
+      - yoga-app-network
+    volumes:
+      - ./src:/usr/src/app/src
+      - ./.env:/usr/src/app/.env
+      - ./package.json:/usr/src/app/package.json
