@@ -2,12 +2,12 @@ import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { PosesService } from './poses.service';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Pose } from './entities/pose.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -23,6 +23,10 @@ export class PosesController {
     description: 'List of poses',
     type: [Pose],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllPoses() {
     return this.posesService.getPoses();
   }
@@ -33,6 +37,10 @@ export class PosesController {
     status: 200,
     description: 'One pose',
     type: [Pose],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getOnePose(@Param('id') id: string) {
     return this.posesService.getPose(+id);

@@ -1,15 +1,16 @@
-import { Category } from 'src/categories/entities/category.entity';
-import { Difficulty } from 'src/difficulties/entities/difficulty.entity';
-import { Session } from 'src/session/entities/session.entity';
-import { SessionCustom } from 'src/session_custom/entities/session_custom.entity';
+import { Category } from '../../categories/entities/category.entity';
+import { Difficulty } from '../../difficulties/entities/difficulty.entity';
+import { Session } from '../../session/entities/session.entity';
+import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
+  Entity,
   JoinTable,
+  ManyToMany,
   ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
+
 @Entity({ name: 'pose' })
 export class Pose {
   @PrimaryGeneratedColumn()

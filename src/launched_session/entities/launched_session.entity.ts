@@ -1,6 +1,6 @@
-import { Entity, Column, ManyToOne, PrimaryColumn } from 'typeorm';
-import { User } from 'src/user/entities/user.entity';
-import { Session } from 'src/session/entities/session.entity';
+import { Column, Entity, ManyToOne, PrimaryColumn } from 'typeorm';
+import { User } from '../../user/entities/user.entity';
+import { Session } from '../../session/entities/session.entity';
 
 @Entity({ name: 'launched_session' })
 export class LaunchedSession {

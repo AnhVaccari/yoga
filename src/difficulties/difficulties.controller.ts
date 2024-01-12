@@ -1,13 +1,13 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { DifficultiesService } from './difficulties.service';
 import { Difficulty } from './entities/difficulty.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -22,6 +22,10 @@ export class DifficultiesController {
     status: 200,
     description: 'List of difficulty levels',
     type: [Difficulty],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getAllDifficulties() {
     return this.difficultiesService.getDifficulties();

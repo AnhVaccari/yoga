@@ -1,12 +1,12 @@
-import { Pose } from 'src/poses/entities/pose.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Pose } from '../../poses/entities/pose.entity';
+import { User } from '../../user/entities/user.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  ManyToMany,
+  Entity,
   JoinTable,
+  ManyToMany,
+  ManyToOne,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity({ name: 'session_custom' })

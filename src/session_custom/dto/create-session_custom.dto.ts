@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsNotEmpty, Length, IsInt, Min } from 'class-validator';
+import { IsInt, IsNotEmpty, IsString, Length, Min } from 'class-validator';
+
 export class CreateSessionCustomDto {
   @IsString()
   @IsNotEmpty()

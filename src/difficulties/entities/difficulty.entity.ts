@@ -1,6 +1,6 @@
-import { Pose } from 'src/poses/entities/pose.entity';
-import { Session } from 'src/session/entities/session.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Pose } from '../../poses/entities/pose.entity';
+import { Session } from '../../session/entities/session.entity';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'difficulty' })
 export class Difficulty {

@@ -2,12 +2,12 @@ import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Category } from './entities/category.entity';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
@@ -23,6 +23,10 @@ export class CategoriesController {
     description: 'List of categories',
     type: [Category],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllCategories() {
     return this.categoriesService.getCategories();
   }
@@ -33,6 +37,10 @@ export class CategoriesController {
     status: 200,
     description: 'One category',
     type: [Category],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getOneCategory(@Param('id') id: string) {
     return this.categoriesService.getCategory(+id);

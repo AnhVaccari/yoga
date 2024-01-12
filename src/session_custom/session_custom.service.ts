@@ -1,24 +1,24 @@
 import {
-  Injectable,
-  Inject,
-  NotFoundException,
   BadRequestException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateSessionCustomDto } from './dto/create-session_custom.dto';
 import { UpdateSessionCustomDto } from './dto/update-session_custom.dto';
 import { Repository } from 'typeorm';
 import { SessionCustom } from './entities/session_custom.entity';
-import { Pose } from 'src/poses/entities/pose.entity';
-import { User } from 'src/user/entities/user.entity';
+import { Pose } from '../poses/entities/pose.entity';
+import { User } from '../user/entities/user.entity';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class SessionCustomService {
   constructor(
-    @Inject('SESSION_CUSTOM_REPOSITORY')
+    @InjectRepository(SessionCustom)
     private sessionCustomRepository: Repository<SessionCustom>,
-    @Inject('POSES_REPOSITORY')
+    @InjectRepository(Pose)
     private poseRepository: Repository<Pose>,
-    @Inject('USER_REPOSITORY')
+    @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
 

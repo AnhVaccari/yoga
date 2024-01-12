@@ -1,6 +1,7 @@
 import { DataSource } from 'typeorm';
 
 import { Pose } from './entities/pose.entity';
+
 export const posesProviders = [
   {
     provide: 'POSES_REPOSITORY',

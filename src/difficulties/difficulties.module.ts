@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { difficultiesProviders } from './difficulties.providers';
-import { DatabaseModule } from 'src/database/database.module';
 import { DifficultiesController } from './difficulties.controller';
 import { DifficultiesService } from './difficulties.service';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Difficulty } from './entities/difficulty.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([Difficulty])],
   controllers: [DifficultiesController],
-  providers: [...difficultiesProviders, DifficultiesService],
+  providers: [DifficultiesService],
 })
 export class DifficultiesModule {}
