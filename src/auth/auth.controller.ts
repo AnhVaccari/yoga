@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   HttpException,
   HttpStatus,
@@ -9,6 +10,7 @@ import {
 import { LocalAuthGuard } from './local-auth.guard';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
+import { UserLoginDto } from './dto/user-login.dto';
 
 @Controller('auth')
 export class AuthController {
@@ -16,9 +18,9 @@ export class AuthController {
 
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Body() user: UserLoginDto) {
     try {
-      return this.authService.login(req.user);
+      return this.authService.login(user);
     } catch (error) {
       throw new HttpException('Login failed', HttpStatus.UNAUTHORIZED);
     }

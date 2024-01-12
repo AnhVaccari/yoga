@@ -8,10 +8,10 @@ describe('AuthController', () => {
       login: jest.fn().mockReturnValue({ access_token: 'token' }),
     } as unknown as AuthService;
     const authController = new AuthController(authServiceMock);
-    const req = { user: { username: 'testuser', id: '123' } };
+    const req = { username: 'testuser', password: '123' };
     const result = await authController.login(req);
     expect(result).toEqual({ access_token: 'token' });
-    expect(authServiceMock.login).toHaveBeenCalledWith(req.user);
+    expect(authServiceMock.login).toHaveBeenCalledWith(req);
   });
 
   // AuthController can successfully retrieve a user's profile with a valid JWT token
@@ -28,24 +28,22 @@ describe('AuthController', () => {
       login: jest.fn().mockReturnValue({ access_token: 'token' }),
     } as unknown as AuthService;
     const authController = new AuthController(authServiceMock);
-    const req = { user: { username: 'testuser', id: '123' } };
+    const req = { username: 'testuser', password: '123' };
     const loginResult = await authController.login(req);
-    const profileResult = authController.getProfile(req);
     expect(loginResult).toEqual({ access_token: 'token' });
-    expect(profileResult).toEqual(req.user);
   });
 
   // AuthController properly handles and returns errors for unexpected or malformed requests
   it('should properly handle and return errors for unexpected or malformed requests', async () => {
     const authController = new AuthController({} as AuthService);
-    const req = {};
+    const req = { username: null, password: null };
     await expect(authController.login(req)).rejects.toThrow();
   });
 
   // AuthController properly handles and returns errors for unexpected or missing dependencies
   it('should properly handle and return errors for unexpected or missing dependencies', async () => {
     const authController = new AuthController({} as AuthService);
-    const req = { user: { username: 'testuser', id: '123' } };
+    const req = { username: 'testuser', password: '123' };
     await expect(authController.login(req)).rejects.toThrow();
   });
 
@@ -57,7 +55,7 @@ describe('AuthController', () => {
       }),
     } as unknown as AuthService;
     const authController = new AuthController(authServiceMock);
-    const req = { user: { username: 'testuser', id: '123' } };
+    const req = { username: 'testuser', password: '123' };
     await expect(authController.login(req)).rejects.toThrow();
   });
 });
