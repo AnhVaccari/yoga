@@ -2,9 +2,9 @@ import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { PosesService } from './poses.service';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Pose } from './entities/pose.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';

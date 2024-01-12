@@ -1,7 +1,7 @@
 import { IsEmail } from 'class-validator';
 import { LaunchedSession } from '../../launched_session/entities/launched_session.entity';
 import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'user' })
 export class User {

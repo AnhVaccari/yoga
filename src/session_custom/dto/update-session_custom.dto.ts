@@ -1,5 +1,6 @@
-import { IsOptional, Min, IsInt, IsString, Length } from 'class-validator';
+import { IsInt, IsOptional, IsString, Length, Min } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
 export class UpdateSessionCustomDto {
   @IsString()
   @IsOptional()

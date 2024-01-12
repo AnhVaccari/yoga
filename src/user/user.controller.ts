@@ -1,20 +1,20 @@
 import {
+  BadRequestException,
+  Body,
+  ConflictException,
   Controller,
   Get,
-  Post,
-  Body,
-  UseGuards,
   NotFoundException,
-  ConflictException,
-  BadRequestException
+  Post,
+  UseGuards,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { User } from './entities/user.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -22,8 +22,8 @@ import {
   IUserAuthenticated,
   UserAuthenticated,
 } from '../decorators/user-authenticated.decorator';
-import {LaunchedSession} from "../launched_session/entities/launched_session.entity";
-import {validate} from "class-validator";
+import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
+import { validate } from 'class-validator';
 
 @ApiBearerAuth()
 @ApiTags('user')

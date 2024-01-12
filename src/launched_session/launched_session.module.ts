@@ -1,10 +1,12 @@
 import { Module } from '@nestjs/common';
-import { launchedSessionProviders } from './launched_session.providers';
-import { DatabaseModule } from '../database/database.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { LaunchedSession } from './entities/launched_session.entity';
+import { User } from '../user/entities/user.entity';
+import { Session } from '../session/entities/session.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([LaunchedSession, User, Session])],
   controllers: [],
-  providers: [...launchedSessionProviders],
+  providers: [],
 })
 export class LaunchedSessionModule {}

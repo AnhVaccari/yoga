@@ -1,12 +1,14 @@
 import { Module } from '@nestjs/common';
 import { SessionCustomService } from './session_custom.service';
 import { SessionCustomController } from './session_custom.controller';
-import { DatabaseModule } from '../database/database.module';
-import { sessionCustomProviders } from './session_custom.providers';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { SessionCustom } from './entities/session_custom.entity';
+import { Pose } from '../poses/entities/pose.entity';
+import { User } from '../user/entities/user.entity';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [TypeOrmModule.forFeature([SessionCustom, Pose, User])],
   controllers: [SessionCustomController],
-  providers: [...sessionCustomProviders, SessionCustomService],
+  providers: [SessionCustomService],
 })
 export class SessionCustomModule {}

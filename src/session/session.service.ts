@@ -1,21 +1,22 @@
 import {
-  Injectable,
-  Inject,
-  NotFoundException,
   BadRequestException,
+  Injectable,
+  NotFoundException,
 } from '@nestjs/common';
 import { IsNull, Repository } from 'typeorm';
 import { Session } from './entities/session.entity';
 import { User } from '../user/entities/user.entity';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+
 @Injectable()
 export class SessionService {
   constructor(
-    @Inject('SESSIONS_REPOSITORY')
+    @InjectRepository(Session)
     private sessionRepository: Repository<Session>,
-    @Inject('USER_REPOSITORY')
+    @InjectRepository(User)
     private userRepository: Repository<User>,
-    @Inject('LAUNCHED_SESSIONS_REPOSITORY')
+    @InjectRepository(LaunchedSession)
     private launchedSessionRepository: Repository<LaunchedSession>,
   ) {}
   async getSessions(): Promise<Session[]> {
@@ -58,11 +59,6 @@ export class SessionService {
       user: user,
       start_date: new Date(),
     });
-
-    // await this.sessionRepository.query(
-    //   'INSERT INTO launched_session (sessionId, userId, start_date) VALUES (?, ?, ?)',
-    //   [sessionId, userId, new Date()],
-    // );
 
     // Effectuer une requête SELECT pour obtenir la version mise à jour de la session
     const updatedSession = await this.sessionRepository.findOne({

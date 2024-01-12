@@ -2,9 +2,9 @@ import { SessionService } from './session.service';
 import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Session } from './entities/session.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';

@@ -1,11 +1,12 @@
 import { Pose } from '../../poses/entities/pose.entity';
 import {
-  Entity,
   Column,
-  PrimaryGeneratedColumn,
-  ManyToMany,
+  Entity,
   JoinTable,
+  ManyToMany,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
+
 @Entity({ name: 'category' })
 export class Category {
   @PrimaryGeneratedColumn()

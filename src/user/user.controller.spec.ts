@@ -2,11 +2,7 @@ import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
-import {
-  BadRequestException,
-  ConflictException,
-  NotFoundException,
-} from '@nestjs/common';
+import { ConflictException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 
 jest

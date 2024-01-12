@@ -2,9 +2,9 @@ import { Controller, Get, Param, UseGuards } from '@nestjs/common';
 import { CategoriesService } from './categories.service';
 import {
   ApiBearerAuth,
-  ApiTags,
   ApiOperation,
   ApiResponse,
+  ApiTags,
 } from '@nestjs/swagger';
 import { Category } from './entities/category.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
