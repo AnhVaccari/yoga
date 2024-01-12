@@ -23,6 +23,10 @@ export class DifficultiesController {
     description: 'List of difficulty levels',
     type: [Difficulty],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllDifficulties() {
     return this.difficultiesService.getDifficulties();
   }

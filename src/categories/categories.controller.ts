@@ -23,6 +23,10 @@ export class CategoriesController {
     description: 'List of categories',
     type: [Category],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllCategories() {
     return this.categoriesService.getCategories();
   }
@@ -33,6 +37,10 @@ export class CategoriesController {
     status: 200,
     description: 'One category',
     type: [Category],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getOneCategory(@Param('id') id: string) {
     return this.categoriesService.getCategory(+id);

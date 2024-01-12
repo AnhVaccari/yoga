@@ -39,6 +39,10 @@ export class UserController {
     description: 'User profil',
     type: [User],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getOneUser(@UserAuthenticated() user: IUserAuthenticated) {
     const foundUser = await this.userService.getUser(user.userId);
     if (!foundUser) {
@@ -54,6 +58,10 @@ export class UserController {
     description: 'History of launched session',
     type: [LaunchedSession],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getHistory(@UserAuthenticated() user: IUserAuthenticated) {
     const userData = await this.getOneUser(user);
     return userData.launchedSession;
@@ -65,6 +73,10 @@ export class UserController {
     status: 200,
     description: 'Create user',
     type: [User],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   @ApiResponse({
     status: 409,

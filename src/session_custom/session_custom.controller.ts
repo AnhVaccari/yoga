@@ -39,6 +39,10 @@ export class SessionCustomController {
     description: 'List of session_customs',
     type: [SessionCustom],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllSessionCustoms(@UserAuthenticated() user: IUserAuthenticated) {
     return this.sessionCustomService.getSessionCustoms(user.userId);
   }
@@ -49,6 +53,10 @@ export class SessionCustomController {
     status: 200,
     description: 'One session_custom',
     type: [SessionCustom],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getSessionCustom(
     @Param('id') id: string,
@@ -63,6 +71,10 @@ export class SessionCustomController {
     status: 200,
     description: 'Create session_custom',
     type: [SessionCustom],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   @ApiResponse({
     status: 400,
@@ -84,6 +96,10 @@ export class SessionCustomController {
     status: 200,
     description: 'Update session_custom',
     type: [SessionCustom],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   @ApiResponse({
     status: 400,
@@ -108,6 +124,10 @@ export class SessionCustomController {
     description: 'Delete session_custom',
     type: [SessionCustom],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async delete(
     @Param('id') id: string,
     @UserAuthenticated() user: IUserAuthenticated,
@@ -121,6 +141,10 @@ export class SessionCustomController {
     status: 200,
     description: 'Add pose to session_custom',
     type: [SessionCustom],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async addPoseToSessionCustom(
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
@@ -141,6 +165,10 @@ export class SessionCustomController {
     description: 'Remove pose from session_custom',
     type: [SessionCustom],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async removePoseFromSessionCustom(
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
     @Param('poseId', ParseIntPipe) poseId: number,
@@ -158,6 +186,10 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'Get session_custom history',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getSessionCustomHistory(
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,

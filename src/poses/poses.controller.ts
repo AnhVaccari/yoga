@@ -23,6 +23,10 @@ export class PosesController {
     description: 'List of poses',
     type: [Pose],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllPoses() {
     return this.posesService.getPoses();
   }
@@ -33,6 +37,10 @@ export class PosesController {
     status: 200,
     description: 'One pose',
     type: [Pose],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async getOnePose(@Param('id') id: string) {
     return this.posesService.getPose(+id);

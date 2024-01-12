@@ -27,6 +27,10 @@ export class SessionController {
     description: 'List of sessions',
     type: [Session],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getAllSessions() {
     return this.sessionService.getSessions();
   }
@@ -38,6 +42,10 @@ export class SessionController {
     description: 'One session',
     type: [Session],
   })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
   async getOneSession(@Param('id') id: string) {
     return this.sessionService.getSession(+id);
   }
@@ -48,6 +56,10 @@ export class SessionController {
     status: 200,
     description: 'Start a session',
     type: [Session],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async startSession(
     @Param('sessionId') sessionId: string,
@@ -62,6 +74,10 @@ export class SessionController {
     status: 200,
     description: 'Stop a session',
     type: [Session],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
   })
   async stopSession(
     @Param('sessionId') sessionId: string,
