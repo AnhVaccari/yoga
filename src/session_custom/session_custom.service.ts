@@ -130,21 +130,17 @@ export class SessionCustomService {
       where: { id: poseId },
     });
     if (!pose) {
-      throw new NotFoundException('Pose not found');
+      throw new NotFoundException('POSE not found');
     }
 
     // Vérifie si la Pose est dans la SessionCustom
-    const poseInSession = sessionCustom.poses.find(
-      (pose) => pose.id === poseId,
-    );
+    const poseInSession = sessionCustom.poses.find((p) => p.id === poseId);
     if (!poseInSession) {
       throw new BadRequestException('Pose not found in SessionCustom');
     }
 
     // Retire la Pose de la SessionCustom
-    sessionCustom.poses = sessionCustom.poses.filter(
-      (pose) => pose.id !== poseId,
-    );
+    sessionCustom.poses = sessionCustom.poses.filter((p) => p.id !== poseId);
 
     await this.sessionCustomRepository.query(
       'DELETE FROM `sessionCustom_pose` WHERE `poseId` = ? AND `sessionCustomId` = ?',
@@ -152,27 +148,5 @@ export class SessionCustomService {
     );
 
     return sessionCustom;
-  }
-
-  // async getSessionCustomHistory(userId: number) {
-  //   const sessionCustoms = await this.sessionCustomRepository
-  //     .createQueryBuilder('sessionCustom')
-  //     .leftJoinAndSelect('sessionCustom.poses', 'poses')
-  //     .leftJoinAndSelect('sessionCustom.user', 'user')
-  //     .where('sessionCustom.user = :userId', { userId: userId })
-  //     .orderBy('sessionCustom.createdAt', 'DESC')
-  //     .getMany();
-
-  //   return sessionCustoms;
-  // }
-
-  async getSessionCustomHistory(
-    sessionCustomId: number,
-    userId: number,
-  ): Promise<SessionCustom[]> {
-    return this.sessionCustomRepository.find({
-      where: { user: { id: userId }, id: sessionCustomId },
-      relations: ['poses'],
-    });
   }
 }

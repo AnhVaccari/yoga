@@ -180,24 +180,4 @@ export class SessionCustomController {
       user.userId,
     );
   }
-
-  @Get(':sessionCustomId/history')
-  @ApiOperation({ summary: 'Get session_custom history' })
-  @ApiResponse({
-    status: 200,
-    description: 'Get session_custom history',
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized',
-  })
-  async getSessionCustomHistory(
-    @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
-    @UserAuthenticated() user: IUserAuthenticated,
-  ) {
-    return this.sessionCustomService.getSessionCustomHistory(
-      sessionCustomId,
-      user.userId,
-    );
-  }
 }

@@ -1,0 +1,410 @@
+import { SessionCustomService } from './session_custom.service';
+import * as bcrypt from 'bcrypt';
+import { SessionCustom } from './entities/session_custom.entity';
+import { Repository } from 'typeorm';
+import { User } from '../user/entities/user.entity';
+import { Pose } from '../poses/entities/pose.entity';
+import { NotFoundException } from '@nestjs/common';
+
+jest
+  .spyOn(bcrypt, 'hash')
+  .mockImplementation(() =>
+    Promise.resolve(
+      '$2b$10$5B9FB.4Idhk2H1dLI9xeIutY8WATBCuMMPLdMMTyhp/3..hwAW9mW',
+    ),
+  );
+describe('SessionCustomService', () => {
+  it('should return SessionCustoms array whith id, title, description, duration, poses with fields when called with a valid id', async () => {
+    const userId = 1;
+    const expectedSessionCustoms = [
+      {
+        id: 1,
+        title: 'testsession',
+        description: 'testdescription',
+        duration: 10,
+        poses: ['testpose1', 'testpose2'],
+      },
+      {
+        id: 2,
+        title: 'testsession2',
+        description: 'testdescription2',
+        duration: 15,
+        poses: ['testpose11', 'testpose26'],
+      },
+      {
+        id: 3,
+        title: 'testsession3',
+        description: 'testdescription3',
+        duration: 20,
+        poses: ['testpose32', 'testpose2', 'testpose9'],
+      },
+    ];
+    const sessionCustomRepositoryMock = {
+      find: jest.fn().mockResolvedValue(expectedSessionCustoms),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn(),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.getSessionCustoms(userId);
+
+    expect(result).toEqual(expectedSessionCustoms);
+    expect(sessionCustomRepositoryMock.find).toHaveBeenCalledWith({
+      where: { user: { id: userId } },
+    });
+  });
+
+  it('should return a SessionCustom object with id, title, description, duration, poses with fields when called with a valid id ', async () => {
+    const userId = 1;
+    const expectedSessionCustom = {
+      id: 1,
+      title: 'testsession',
+      description: 'testdescription',
+      duration: 10,
+      poses: ['testpose1', 'testpose2'],
+    };
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue(expectedSessionCustom),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn(),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.getSessionCustom(
+      userId,
+      expectedSessionCustom.id,
+    );
+
+    expect(result).toEqual(expectedSessionCustom);
+    expect(sessionCustomRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        user: expect.objectContaining({ id: userId }),
+        id: expectedSessionCustom.id,
+      },
+    });
+  });
+
+  it('should create a new SessionCustom object and return it when called with a valid CreateSessionCustomDto', async () => {
+    const createSessionCustomDto = {
+      title: 'testsession',
+      description: 'testdescription',
+      duration: 10,
+    };
+
+    const userId = 1;
+
+    const sessionCustomRepositoryMock = {
+      create: jest.fn().mockReturnValue(createSessionCustomDto),
+      save: jest.fn().mockResolvedValue(createSessionCustomDto),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.createSessionCustom(
+      createSessionCustomDto,
+      userId,
+    );
+
+    expect(result).toEqual(createSessionCustomDto);
+    expect(sessionCustomRepositoryMock.create).toHaveBeenCalledWith({
+      ...createSessionCustomDto,
+      user: expect.objectContaining({ id: userId }),
+    });
+    expect(sessionCustomRepositoryMock.save).toHaveBeenCalledWith(
+      createSessionCustomDto,
+    );
+  });
+
+  it('should update a SessionCustom object and return it when called with a valid UpdateSessionCustomDto', async () => {
+    const sessionId = 1;
+    const updateSessionCustomDto = {
+      id: sessionId,
+      title: 'testsession',
+      description: 'testdescription',
+      duration: 10,
+    };
+
+    const userId = 1;
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
+      update: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.updateSessionCustom(
+      sessionId,
+      updateSessionCustomDto,
+      userId,
+    );
+
+    expect(result).toEqual(updateSessionCustomDto);
+    expect(sessionCustomRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        user: expect.objectContaining({ id: userId }),
+        id: sessionId,
+      },
+    });
+    expect(sessionCustomRepositoryMock.update).toHaveBeenCalledWith(
+      { id: sessionId, user: { id: userId } },
+      expect.objectContaining({
+        ...updateSessionCustomDto,
+        duration: expect.any(Number),
+        poses: undefined,
+      }),
+    );
+  });
+
+  it('should delete a SessionCustom object and return it when called with a valid id', async () => {
+    const sessionId = 1;
+
+    const userId = 1;
+
+    const deletedSession = { id: sessionId };
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ id: sessionId }),
+      softDelete: jest.fn().mockResolvedValue({ affected: 1 }),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.removeSessionCustom(
+      sessionId,
+      userId,
+    );
+
+    expect(result).toEqual(deletedSession);
+    expect(sessionCustomRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        user: expect.objectContaining({ id: userId }),
+        id: sessionId,
+      },
+    });
+    expect(sessionCustomRepositoryMock.softDelete).toHaveBeenCalledWith(
+      expect.objectContaining({
+        id: sessionId,
+      }),
+    );
+  });
+
+  it('should throw a NotFoundException when called with an invalid id', async () => {
+    const sessionId = 1;
+
+    const userId = 1;
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue(undefined),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+      findOne: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+
+    await expect(
+      sessionCustomService.removeSessionCustom(sessionId, userId),
+    ).rejects.toThrow(NotFoundException);
+  });
+
+  it('should add pose to session when called with a valid id', async () => {
+    const poseId = 3;
+    const sessionCustomId = 5;
+    const userId = 1;
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+      query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ id: poseId }),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.addPoseToSessionCustom(
+      sessionCustomId,
+      poseId,
+      userId,
+    );
+    expect(result).toEqual({ id: sessionCustomId, poses: [{ id: poseId }] });
+
+    expect(sessionCustomRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        user: expect.objectContaining({ id: userId }),
+        id: sessionCustomId,
+      },
+    });
+    expect(poseRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        id: poseId,
+      },
+    });
+    expect(sessionCustomRepositoryMock.query).toHaveBeenCalledWith(
+      'INSERT INTO `sessionCustom_pose`(`poseId`, `sessionCustomId`) VALUES (?,?)',
+      [poseId, sessionCustomId],
+    );
+  });
+
+  it('should remove pose from session when called with a valid id', async () => {
+    const poseId = 3;
+    const sessionCustomId = 5;
+    const userId = 1;
+
+    const sessionCustom = {
+      id: sessionCustomId,
+      poses: [{ id: 1 }, { id: 2 }, { id: 3 }],
+    };
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue(sessionCustom),
+      query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ id: poseId }),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+    const result = await sessionCustomService.removePoseFromSessionCustom(
+      sessionCustomId,
+      poseId,
+      userId,
+    );
+    expect(result).toEqual(sessionCustom);
+
+    expect(sessionCustomRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        user: expect.objectContaining({ id: userId }),
+        id: sessionCustomId,
+      },
+    });
+    expect(poseRepositoryMock.findOne).toHaveBeenCalledWith({
+      where: {
+        id: poseId,
+      },
+    });
+    expect(sessionCustomRepositoryMock.query).toHaveBeenCalledWith(
+      'DELETE FROM `sessionCustom_pose` WHERE `poseId` = ? AND `sessionCustomId` = ?',
+      [poseId, sessionCustomId],
+    );
+  });
+
+  it('should throw a NotFoundException when called with an invalid pose id', async () => {
+    const poseId = 3;
+    const sessionCustomId = 5;
+    const userId = 1;
+
+    const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+      query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+    } as unknown as Repository<SessionCustom>;
+
+    const userRepositoryMock = {
+      findOne: jest.fn().mockReturnValue({ id: userId }),
+    } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      findOne: jest.fn().mockResolvedValue(undefined),
+    } as unknown as Repository<Pose>;
+
+    const sessionCustomService = new SessionCustomService(
+      sessionCustomRepositoryMock,
+      poseRepositoryMock,
+      userRepositoryMock,
+    );
+
+    await expect(
+      sessionCustomService.addPoseToSessionCustom(
+        sessionCustomId,
+        poseId,
+        userId,
+      ),
+    ).rejects.toThrow(NotFoundException);
+  });
+});
