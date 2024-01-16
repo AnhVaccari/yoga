@@ -17,4 +17,10 @@ export class PosesService {
   async getPose(id: number) {
     return this.posesRepository.findOne({ where: { id: id } });
   }
+
+  async getPosesByDifficulty(difficultyId: number): Promise<Pose[]> {
+    return this.posesRepository.find({
+      where: { difficulty: { id: difficultyId } },
+    });
+  }
 }

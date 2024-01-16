@@ -45,4 +45,19 @@ export class PosesController {
   async getOnePose(@Param('id') id: string) {
     return this.posesService.getPose(+id);
   }
+
+  @Get('difficulty/:id')
+  @ApiOperation({ summary: 'Get poses by difficulty' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of poses',
+    type: [Pose],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async getPosesByDifficulty(@Param('id') id: string) {
+    return this.posesService.getPosesByDifficulty(+id);
+  }
 }

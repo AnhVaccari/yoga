@@ -288,13 +288,7 @@ describe('App (e2e)', () => {
         }),
       ),
 
-      // create: jest.fn().mockImplementation((createSessionCustomDto) =>
-      //   Promise.resolve({
-      //     title: createSessionCustomDto.title,
-      //     description: createSessionCustomDto.description,
-      //     duration: createSessionCustomDto.duration,
-      //   }),
-      // ),
+      create: jest.fn(),
     } as unknown as SessionCustomService;
 
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -386,7 +380,7 @@ describe('App (e2e)', () => {
       });
   });
 
-  xit('/session-custom (POST)', () => {
+  it('/session-custom (POST)', () => {
     return request(app.getHttpServer())
       .post('/session-custom')
       .auth(accessToken, { type: 'bearer' })
