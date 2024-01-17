@@ -15,8 +15,7 @@ jest
   );
 describe('SessionService', () => {
   // getSessions method returns an array of Session objects with id, title, description, duration, difficulty fields
-  it('should return Sessions array with id, title, description, duration, difficulty fields when called whith a valid id', async () => {
-    const userId = 1;
+  it('should return Sessions array with id, title, description, duration, difficulty fields', async () => {
     const expectedSession = [
       {
         id: 1,
@@ -83,13 +82,11 @@ describe('SessionService', () => {
       userRepositoryMock,
       launchedSessionRepositoryMock,
     );
-    const result = await sessionService.getSessions(userId);
+    const result = await sessionService.getSessions();
 
     expect(result).toEqual(expectedSession);
 
-    expect(sessionRepositoryMock.find).toHaveBeenCalledWith({
-      where: { id: userId },
-    });
+    expect(sessionRepositoryMock.find).toHaveBeenCalled();
   });
 
   it('should start a session when called with a valid session id and user id', async () => {

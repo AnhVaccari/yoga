@@ -50,7 +50,7 @@ export class PosesController {
   @ApiOperation({ summary: 'Get poses by difficulty' })
   @ApiResponse({
     status: 200,
-    description: 'List of poses',
+    description: 'List of poses by difficulty',
     type: [Pose],
   })
   @ApiResponse({
