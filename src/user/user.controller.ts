@@ -70,7 +70,7 @@ export class UserController {
   @Post()
   @ApiOperation({ summary: 'Create user' })
   @ApiResponse({
-    status: 200,
+    status: 201,
     description: 'Create user',
     type: [User],
   })

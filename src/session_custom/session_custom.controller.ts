@@ -33,10 +33,10 @@ export class SessionCustomController {
   constructor(private readonly sessionCustomService: SessionCustomService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Get all session_customs' })
+  @ApiOperation({ summary: 'Get all session customs' })
   @ApiResponse({
     status: 200,
-    description: 'List of session_customs',
+    description: 'List of session customs',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -48,10 +48,10 @@ export class SessionCustomController {
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get one session_custom' })
+  @ApiOperation({ summary: 'Get one session custom' })
   @ApiResponse({
     status: 200,
-    description: 'One session_custom',
+    description: 'One session custom',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -66,10 +66,10 @@ export class SessionCustomController {
   }
 
   @Post()
-  @ApiOperation({ summary: 'Create session_custom' })
+  @ApiOperation({ summary: 'Create session custom' })
   @ApiResponse({
-    status: 200,
-    description: 'Create session_custom',
+    status: 201,
+    description: 'Create session custom',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -91,10 +91,10 @@ export class SessionCustomController {
   }
 
   @Patch(':id')
-  @ApiOperation({ summary: 'Update session_custom' })
+  @ApiOperation({ summary: 'Update session custom' })
   @ApiResponse({
     status: 200,
-    description: 'Update session_custom',
+    description: 'Update session custom',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -118,10 +118,10 @@ export class SessionCustomController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete session_custom' })
+  @ApiOperation({ summary: 'Delete session custom' })
   @ApiResponse({
     status: 200,
-    description: 'Delete session_custom',
+    description: 'Delete session custom',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -136,10 +136,10 @@ export class SessionCustomController {
   }
 
   @Post(':sessionCustomId/poses/:poseId')
-  @ApiOperation({ summary: 'Add pose to session_custom' })
+  @ApiOperation({ summary: 'Add pose to session custom' })
   @ApiResponse({
     status: 200,
-    description: 'Add pose to session_custom',
+    description: 'Add pose to session custom',
     type: [SessionCustom],
   })
   @ApiResponse({
@@ -159,10 +159,10 @@ export class SessionCustomController {
   }
 
   @Delete(':sessionCustomId/poses/:poseId')
-  @ApiOperation({ summary: 'Remove pose from session_custom' })
+  @ApiOperation({ summary: 'Remove pose from session custom' })
   @ApiResponse({
     status: 200,
-    description: 'Remove pose from session_custom',
+    description: 'Remove pose from session custom',
     type: [SessionCustom],
   })
   @ApiResponse({

@@ -83,9 +83,9 @@ export class SessionCustomService {
     id: number,
     userId: number,
   ): Promise<SessionCustom> {
-    await this.getSessionCustom(id, userId);
-    await this.sessionCustomRepository.softDelete({ id: id });
-    return this.getSessionCustom(id, userId);
+    const sessionCustom = await this.getSessionCustom(id, userId);
+    await this.sessionCustomRepository.delete({ id: sessionCustom.id });
+    return sessionCustom;
   }
 
   async addPoseToSessionCustom(

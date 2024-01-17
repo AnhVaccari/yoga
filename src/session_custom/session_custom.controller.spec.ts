@@ -253,9 +253,9 @@ describe('SessionCustomController', () => {
       .fn()
       .mockResolvedValue(expectedSessionCustom);
 
-    sessionCustomRepositoryMock.softDelete = jest
+    sessionCustomRepositoryMock.delete = jest
       .fn()
-      .mockResolvedValue({ affected: 1 });
+      .mockResolvedValue(expectedSessionCustom);
 
     const result = await sessionCustomController.delete('2', expectedUser);
 

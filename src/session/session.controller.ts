@@ -31,8 +31,8 @@ export class SessionController {
     status: 401,
     description: 'Unauthorized',
   })
-  async getAllSessions() {
-    return this.sessionService.getSessions();
+  async getAllSessions(@UserAuthenticated() user: IUserAuthenticated) {
+    return this.sessionService.getSessions(user.userId);
   }
 
   @Get(':id')
@@ -46,8 +46,11 @@ export class SessionController {
     status: 401,
     description: 'Unauthorized',
   })
-  async getOneSession(@Param('id') id: string) {
-    return this.sessionService.getSession(+id);
+  async getOneSession(
+    @Param('id') id: string,
+    @UserAuthenticated() user: IUserAuthenticated,
+  ) {
+    return this.sessionService.getSession(+id, user.userId);
   }
 
   @Post(':sessionId/start')

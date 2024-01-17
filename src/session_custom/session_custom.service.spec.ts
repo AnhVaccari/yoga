@@ -202,7 +202,7 @@ describe('SessionCustomService', () => {
     );
   });
 
-  it('should delete a SessionCustom object and return it when called with a valid id', async () => {
+  it('should delete a SessionCustom object when called with a valid id', async () => {
     const sessionId = 1;
 
     const userId = 1;
@@ -211,7 +211,7 @@ describe('SessionCustomService', () => {
 
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionId }),
-      softDelete: jest.fn().mockResolvedValue({ affected: 1 }),
+      delete: jest.fn().mockResolvedValue({ ...deletedSession }),
     } as unknown as Repository<SessionCustom>;
 
     const userRepositoryMock = {
@@ -240,7 +240,7 @@ describe('SessionCustomService', () => {
         id: sessionId,
       },
     });
-    expect(sessionCustomRepositoryMock.softDelete).toHaveBeenCalledWith(
+    expect(sessionCustomRepositoryMock.delete).toHaveBeenCalledWith(
       expect.objectContaining({
         id: sessionId,
       }),

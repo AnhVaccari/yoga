@@ -19,11 +19,15 @@ export class SessionService {
     @InjectRepository(LaunchedSession)
     private launchedSessionRepository: Repository<LaunchedSession>,
   ) {}
-  async getSessions(): Promise<Session[]> {
-    return this.sessionRepository.find();
+  async getSessions(userId: number): Promise<Session[]> {
+    return this.sessionRepository.find({
+      where: { id: userId },
+    });
   }
-  async getSession(id: number): Promise<Session> {
-    return this.sessionRepository.findOne({ where: { id: id } });
+  async getSession(id: number, userId: number): Promise<Session> {
+    return this.sessionRepository.findOne({
+      where: { id: userId },
+    });
   }
 
   async startSession(sessionId: number, userId: number): Promise<Session> {
