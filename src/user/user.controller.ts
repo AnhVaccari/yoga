@@ -93,4 +93,19 @@ export class UserController {
     }
     return this.userService.createUser(createUserDto);
   }
+
+  @Get('session/active')
+  @ApiOperation({ summary: 'Get active session' })
+  @ApiResponse({
+    status: 200,
+    description: 'Session active status',
+    type: [LaunchedSession],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async isSessionActive(@UserAuthenticated() user: IUserAuthenticated) {
+    return this.userService.isSessionActive(user.userId);
+  }
 }
