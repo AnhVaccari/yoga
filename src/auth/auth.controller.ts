@@ -4,11 +4,9 @@ import {
   HttpException,
   HttpStatus,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import { LocalAuthGuard } from './local-auth.guard';
-import { JwtAuthGuard } from './jwt-auth.guard';
 import { AuthService } from './auth.service';
 import { UserLoginDto } from './dto/user-login.dto';
 
@@ -24,11 +22,5 @@ export class AuthController {
     } catch (error) {
       throw new HttpException('Login failed', HttpStatus.UNAUTHORIZED);
     }
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Post('profile')
-  getProfile(@Request() req) {
-    return req.user;
   }
 }

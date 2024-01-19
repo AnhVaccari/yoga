@@ -14,14 +14,6 @@ describe('AuthController', () => {
     expect(authServiceMock.login).toHaveBeenCalledWith(req);
   });
 
-  // AuthController can successfully retrieve a user's profile with a valid JWT token
-  it("should successfully retrieve a user's profile with a valid JWT token", () => {
-    const authController = new AuthController({} as AuthService);
-    const req = { user: { username: 'testuser', id: '123' } };
-    const result = authController.getProfile(req);
-    expect(result).toEqual(req.user);
-  });
-
   // AuthController returns the expected response format for successful login and profile retrieval
   it('should return the expected response format for successful login and profile retrieval', async () => {
     const authServiceMock = {

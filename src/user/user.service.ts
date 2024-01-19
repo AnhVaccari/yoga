@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
@@ -56,8 +56,10 @@ export class UserService {
       },
     });
 
-    return ongoingSession
-      ? ongoingSession
-      : { id: null, message: 'No active session' };
+    if (!ongoingSession) {
+      throw new NotFoundException('No active session');
+    }
+
+    return ongoingSession;
   }
 }
