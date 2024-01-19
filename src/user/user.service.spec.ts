@@ -2,6 +2,7 @@ import { UserService } from './user.service';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
 
 jest
   .spyOn(bcrypt, 'hash')
@@ -12,6 +13,7 @@ jest
   );
 
 describe('UserService', () => {
+  let launchedSessionRepositoryMock: Repository<LaunchedSession>;
   // getUser method returns a User object with id, username, email, and date_joined fields
   it('should return a User object with id, username, email, and date_joined fields when called with a valid id', () => {
     // Arrange
@@ -25,7 +27,14 @@ describe('UserService', () => {
     const userRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
-    const userService = new UserService(userRepositoryMock);
+
+    launchedSessionRepositoryMock = {
+      findOne: jest.fn(),
+    } as unknown as Repository<LaunchedSession>;
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
 
     // Act
     const result = userService.getUser(id);
@@ -60,7 +69,10 @@ describe('UserService', () => {
       create: jest.fn().mockReturnValue(expectedUser),
       save: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
 
     // Act
     const result = await userService.createUser(createUserDto);
@@ -94,7 +106,10 @@ describe('UserService', () => {
       update: jest.fn(),
       findOne: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
 
     // Act
     const result = await userService.updateUser(id, updateUserDto);

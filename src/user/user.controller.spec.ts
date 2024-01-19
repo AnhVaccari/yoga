@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
+import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
 
 jest
   .spyOn(bcrypt, 'hash')
@@ -15,6 +16,7 @@ jest
 
 describe('UserController', () => {
   let userRepositoryMock: Repository<User>;
+  let launchedSessionRepositoryMock: Repository<LaunchedSession>;
 
   beforeEach(() => {
     const expectedUser = {
@@ -30,12 +32,19 @@ describe('UserController', () => {
       update: jest.fn(),
       save: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
+
+    launchedSessionRepositoryMock = {
+      findOne: jest.fn(),
+    } as unknown as Repository<LaunchedSession>;
   });
 
   // UserController can get user profile successfully
   it('should get user profile successfully', async () => {
     // Arrange
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
 
@@ -57,7 +66,10 @@ describe('UserController', () => {
   // UserController can get user history of launched session successfully
   it('should get user history of launched session successfully', async () => {
     // Arrange
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
 
@@ -73,7 +85,10 @@ describe('UserController', () => {
   // UserController can create a new user successfully
   it('should create a new user successfully', async () => {
     userRepositoryMock.findOne = jest.fn().mockResolvedValue(undefined);
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const createUserDto = {
       username: 'jane',
@@ -100,7 +115,10 @@ describe('UserController', () => {
   // UserController throws NotFoundException when user profile is not found
   it('should throw NotFoundException when user profile is not found', async () => {
     userRepositoryMock.findOne = jest.fn().mockResolvedValue(undefined);
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
 
@@ -113,7 +131,10 @@ describe('UserController', () => {
   // UserController throws ConflictException when trying to create a user that already exists
   it('should throw ConflictException when trying to create a user that already exists', async () => {
     // Arrange
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const createUserDto = {
       username: 'jane',
@@ -131,7 +152,10 @@ describe('UserController', () => {
   // UserController throws BadRequestException when create user dto is not valid
   it('should throw BadRequestException when create user dto is not valid', async () => {
     // Arrange
-    const userService = new UserService(userRepositoryMock);
+    const userService = new UserService(
+      userRepositoryMock,
+      launchedSessionRepositoryMock,
+    );
     const userController = new UserController(userService);
     const createUserDto = {
       username: 'jane',

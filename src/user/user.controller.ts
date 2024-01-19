@@ -37,7 +37,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'User profil',
-    type: [User],
+    type: User,
   })
   @ApiResponse({
     status: 401,
@@ -72,7 +72,7 @@ export class UserController {
   @ApiResponse({
     status: 201,
     description: 'Create user',
-    type: [User],
+    type: User,
   })
   @ApiResponse({
     status: 401,
@@ -99,7 +99,7 @@ export class UserController {
   @ApiResponse({
     status: 200,
     description: 'Session active status',
-    type: [LaunchedSession],
+    type: LaunchedSession,
   })
   @ApiResponse({
     status: 401,
