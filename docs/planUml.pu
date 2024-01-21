@@ -56,6 +56,7 @@ entity "SessionCustom" as sessionCustom {
   description : text
   duration : INTEGER
   difficultyId : INTEGER  [FK]
+  userId : INTEGER  [FK]
 }
 
 entity "Launched_Session" as launched_session {

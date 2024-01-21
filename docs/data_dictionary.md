@@ -58,6 +58,7 @@
 | description  | TEXT         |             | Detailed description of the custom session, text                 |
 | duration     | INTEGER      |             | Estimated duration of the session in MM:SS format                |
 | difficultyId | INTEGER      | FK          | Associated user identifier ( foreign key referencing DIFFICULTY) |
+| userId       | INTEGER      | FK          | Associated user identifier ( foreign key referencing USER)       |
 
 ### LAUNCHED_SESSION (`launched_session`)
 
