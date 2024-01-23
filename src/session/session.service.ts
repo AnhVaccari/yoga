@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { IsNull, Repository } from 'typeorm';
+import { IsNull, Like, MoreThan, Repository } from 'typeorm';
 import { Session } from './entities/session.entity';
 import { User } from '../user/entities/user.entity';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
@@ -117,5 +117,19 @@ export class SessionService {
     }
 
     return updatedSession;
+  }
+
+  async search(search: string) {
+    const result = await this.sessionRepository.find({
+      where: [
+        { difficulty: { difficulty_level: Like(`%${search}%`) } },
+        { title: Like(`%${search}%`) },
+        { duration: isNaN(Number(search)) ? IsNull() : MoreThan(+search) },
+      ],
+    });
+    return {
+      count: result.length,
+      items: result,
+    };
   }
 }

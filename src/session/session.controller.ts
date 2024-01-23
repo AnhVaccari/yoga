@@ -1,5 +1,5 @@
 import { SessionService } from './session.service';
-import { Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Post, Query, UseGuards } from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiOperation,
@@ -12,13 +12,35 @@ import {
   IUserAuthenticated,
   UserAuthenticated,
 } from '../decorators/user-authenticated.decorator';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @ApiBearerAuth()
 @ApiTags('yoga')
 @UseGuards(JwtAuthGuard)
 @Controller('session')
 export class SessionController {
-  constructor(private readonly sessionService: SessionService) {}
+  constructor(
+    @InjectRepository(Session)
+    protected readonly repository: Repository<Session>,
+    private readonly sessionService: SessionService,
+  ) {}
+
+  @Get('search')
+  @ApiOperation({ summary: 'Search sessions' })
+  @ApiResponse({
+    status: 200,
+    description: 'List of sessions',
+    type: [Session],
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  public search(@Query('term') term: string) {
+    console.log(term);
+    return this.sessionService.search(term);
+  }
 
   @Get()
   @ApiOperation({ summary: 'Get all sessions' })
