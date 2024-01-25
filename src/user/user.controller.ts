@@ -26,7 +26,7 @@ import { LaunchedSession } from '../launched_session/entities/launched_session.e
 import { validate } from 'class-validator';
 
 @ApiBearerAuth()
-@ApiTags('Sser')
+@ApiTags('User')
 @UseGuards(JwtAuthGuard)
 @Controller('user')
 export class UserController {

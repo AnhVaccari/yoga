@@ -151,8 +151,6 @@ export class SessionService {
       }),
     );
 
-    const result = await queryBuilder.getManyAndCount();
-
-    return result;
+    return queryBuilder.getManyAndCount();
   }
 }

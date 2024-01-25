@@ -1,6 +1,6 @@
 import { SessionCustomService } from './session_custom.service';
 import * as bcrypt from 'bcrypt';
-import { SessionCustom } from './entities/session_custom.entity';
+import { Session } from '../session/entities/session.entity';
 import { Repository } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { Pose } from '../poses/entities/pose.entity';
@@ -23,6 +23,7 @@ describe('SessionCustomService', () => {
         description: 'testdescription',
         duration: 10,
         poses: ['testpose1', 'testpose2'],
+        isCustom: true,
       },
       {
         id: 2,
@@ -30,6 +31,7 @@ describe('SessionCustomService', () => {
         description: 'testdescription2',
         duration: 15,
         poses: ['testpose11', 'testpose26'],
+        isCustom: true,
       },
       {
         id: 3,
@@ -37,11 +39,12 @@ describe('SessionCustomService', () => {
         description: 'testdescription3',
         duration: 20,
         poses: ['testpose32', 'testpose2', 'testpose9'],
+        isCustom: true,
       },
     ];
     const sessionCustomRepositoryMock = {
       find: jest.fn().mockResolvedValue(expectedSessionCustoms),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn(),
@@ -61,7 +64,7 @@ describe('SessionCustomService', () => {
 
     expect(result).toEqual(expectedSessionCustoms);
     expect(sessionCustomRepositoryMock.find).toHaveBeenCalledWith({
-      where: { user: { id: userId } },
+      where: { user: { id: userId }, isCustom: true },
     });
   });
 
@@ -76,7 +79,7 @@ describe('SessionCustomService', () => {
     };
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(expectedSessionCustom),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn(),
@@ -102,6 +105,7 @@ describe('SessionCustomService', () => {
       where: {
         user: expect.objectContaining({ id: userId }),
         id: expectedSessionCustom.id,
+        isCustom: true,
       },
     });
   });
@@ -118,7 +122,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       create: jest.fn().mockReturnValue(createSessionCustomDto),
       save: jest.fn().mockResolvedValue(createSessionCustomDto),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -143,6 +147,7 @@ describe('SessionCustomService', () => {
     expect(sessionCustomRepositoryMock.create).toHaveBeenCalledWith({
       ...createSessionCustomDto,
       user: expect.objectContaining({ id: userId }),
+      isCustom: true,
     });
     expect(sessionCustomRepositoryMock.save).toHaveBeenCalledWith(
       createSessionCustomDto,
@@ -163,7 +168,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
       update: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -190,6 +195,7 @@ describe('SessionCustomService', () => {
       where: {
         user: expect.objectContaining({ id: userId }),
         id: sessionId,
+        isCustom: true,
       },
     });
     expect(sessionCustomRepositoryMock.update).toHaveBeenCalledWith(
@@ -212,7 +218,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionId }),
       delete: jest.fn().mockResolvedValue({ ...deletedSession }),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -238,6 +244,7 @@ describe('SessionCustomService', () => {
       where: {
         user: expect.objectContaining({ id: userId }),
         id: sessionId,
+        isCustom: true,
       },
     });
     expect(sessionCustomRepositoryMock.delete).toHaveBeenCalledWith(
@@ -254,7 +261,7 @@ describe('SessionCustomService', () => {
 
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(undefined),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -284,7 +291,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -310,6 +317,7 @@ describe('SessionCustomService', () => {
       where: {
         user: expect.objectContaining({ id: userId }),
         id: sessionCustomId,
+        isCustom: true,
       },
     });
     expect(poseRepositoryMock.findOne).toHaveBeenCalledWith({
@@ -336,7 +344,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(sessionCustom),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),
@@ -362,6 +370,7 @@ describe('SessionCustomService', () => {
       where: {
         user: expect.objectContaining({ id: userId }),
         id: sessionCustomId,
+        isCustom: true,
       },
     });
     expect(poseRepositoryMock.findOne).toHaveBeenCalledWith({
@@ -383,7 +392,7 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
       findOne: jest.fn().mockReturnValue({ id: userId }),

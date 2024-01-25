@@ -1,7 +1,7 @@
 import { SessionCustomService } from './session_custom.service';
 import { SessionCustomController } from './session_custom.controller';
 import { Repository } from 'typeorm';
-import { SessionCustom } from './entities/session_custom.entity';
+import { Session } from '../session/entities/session.entity';
 import * as bcrypt from 'bcrypt';
 import { User } from '../user/entities/user.entity';
 import { Pose } from '../poses/entities/pose.entity';
@@ -17,7 +17,7 @@ jest
   );
 
 describe('SessionCustomController', () => {
-  let sessionCustomRepositoryMock: Repository<SessionCustom>;
+  let sessionCustomRepositoryMock: Repository<Session>;
   let poseRepositoryMock: Repository<Pose>;
   let userRepositoryMock: Repository<User>;
 
@@ -30,7 +30,7 @@ describe('SessionCustomController', () => {
       softDelete: jest.fn(),
       save: jest.fn(),
       query: jest.fn(),
-    } as unknown as Repository<SessionCustom>;
+    } as unknown as Repository<Session>;
 
     userRepositoryMock = {
       findOne: jest.fn(),
