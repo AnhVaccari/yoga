@@ -10,8 +10,8 @@ entity "User" as user {
   --
   username : VARCHAR(50)
   email : VARCHAR(255)
-  password : text
-  date_joined: timestamp
+  password : TEXT
+  date_joined: TIMESTAMP
 }
 
 entity "Pose" as pose {
@@ -19,19 +19,19 @@ entity "Pose" as pose {
   --
   sanskrit_name : VARCHAR(50)
   english_name : VARCHAR(50)
-  description: text
+  description: TEXT
   benefits : VARCHAR(100)
   img_url_svg : VARCHAR(255)
   img_url_jpg : VARCHAR(255)
   img_url_svg_alt : VARCHAR(255)
-  difficultyId : INTEGER  [FK]
+  difficultyId : INTEGER [FK]
 }
 
 entity "Category" as category {
   *id : INTEGER NOT NULL [PK]
   --
   category_name : VARCHAR(50)
-  description : text
+  description : TEXT
 }
 
 entity "Difficulty" as difficulty {
@@ -44,60 +44,53 @@ entity "Session" as session {
   *id : INTEGER NOT NULL [PK]
   --
   title : VARCHAR(255)
-  description : text
+  description : TEXT
   duration : INTEGER
-  difficultyId : INTEGER  [FK]
+  difficultyId : INTEGER [FK]
+  userId : INTEGER NULL [FK]
+  isCustom : BOOLEAN
 }
 
-entity "SessionCustom" as sessionCustom {
-  *id : INTEGER NOT NULL [PK]
-  --
-  title : VARCHAR(255)
-  description : text
-  duration : INTEGER
-  difficultyId : INTEGER  [FK]
-  userId : INTEGER  [FK]
-}
-
-entity "Launched_Session" as launched_session {
+entity "Launched_Session" {
   *userId : INTEGER [PK, FK]
   *sessionId : INTEGER [PK, FK]
-  *start_date : date [PK]
+  *start_date : TIMESTAMP [PK]
   --
-  end_date : date
+  end_date : TIMESTAMP
 }
 
 entity "Pose_Category" {
-  *poseId : INTEGER [FK]
-  *categoryId : INTEGER [FK]
+  *poseId : INTEGER [PK, FK]
+  *categoryId : INTEGER [PK, FK]
 }
 
 entity "Session_Pose" {
-  *sessionId : INTEGER [FK]
-  *poseId : INTEGER [FK]
+  *sessionId : INTEGER [PK, FK]
+  *poseId : INTEGER [PK, FK]
 }
 
-entity "SessionCustom_Pose" {
-  *sessionCustomId : INTEGER [FK]
-  *poseId : INTEGER [FK]
-}
+'user' and 'session' relation
+user |o--o{ session
 
-user }o---o{ session
-user }o--|| sessionCustom 
-session }|---|{ pose 
-session ||--o{ difficulty 
-pose }o--o{ category 
+'session' and 'difficulty' relation
+session }|--o{ difficulty
 
-user }--o{ launched_session 
-session }--o{ launched_session 
+'user' and 'Launched_Session' relation
+Launched_Session }|--|| user
 
-pose }--|| Pose_Category 
-Pose_Category }--|| category
+'session' and 'Launched_Session' relation
+Launched_Session }|--|| session
 
-pose }--|| Session_Pose  
-Session_Pose }--|| session
+'pose' and 'Pose_Category' relation
+pose ||--o{ Pose_Category
 
-pose }---|| SessionCustom_Pose 
-SessionCustom_Pose }--|| sessionCustom
+'category' and 'Pose_Category' relation
+category ||--o{ Pose_Category
+
+'pose' and 'Session_Pose' relation
+session ||--o{ Session_Pose
+
+'session' and 'Session_Pose' relation
+Session_Pose }|--|| pose
 
 @enduml

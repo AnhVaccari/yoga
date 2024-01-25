@@ -1,0 +1,19 @@
+USER: réf_user, username, email, password, date_joined
+Create a custom, 01 SESSION, 0N USER
+:
+:
+:
+
+Launch, 0N USER, 0N SESSION: start_date, end_date
+SESSION: réf_session, title, description, duration, is_custom
+Contains, NN POSE, 1N SESSION
+POSE: réf_pose, sanskrit_name, english_name, description, benefits, img_url_svg, img_url_svg_alt, img_url_jpg
+Belongs To, 0N POSE, 0N CATEGORY
+
+:
+Have, 11 SESSION, 0N DIFFICULTY
+DIFFICULTY: réf_difficulty, difficulty_level
+Associate, 11 POSE, 0N DIFFICULTY
+CATEGORY: réf_category, category_name, short_name, description
+
+
