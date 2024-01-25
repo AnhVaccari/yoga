@@ -1,7 +1,6 @@
 import { Category } from '../../categories/entities/category.entity';
 import { Difficulty } from '../../difficulties/entities/difficulty.entity';
 import { Session } from '../../session/entities/session.entity';
-import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
 import {
   Column,
   Entity,
@@ -12,7 +11,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity({ name: 'pose' })
+@Entity({ name: 'Pose' })
 export class Pose {
   @ApiProperty({
     type: 'number',
@@ -75,7 +74,7 @@ export class Pose {
     description: 'All sessions that contain this pose',
   })
   @ManyToMany(() => Session, (session: Session) => session.poses)
-  @JoinTable({ name: 'session_pose' })
+  @JoinTable({ name: 'Session_Pose' })
   sessions: Session[];
 
   @ApiProperty({
@@ -83,7 +82,7 @@ export class Pose {
     description: 'All categories that contain this pose',
   })
   @ManyToMany(() => Category, (category: Category) => category.poses)
-  @JoinTable({ name: 'pose_category' })
+  @JoinTable({ name: 'Pose_Category' })
   categories: Category[];
 
   @ApiProperty({
@@ -92,20 +91,4 @@ export class Pose {
   })
   @ManyToOne(() => Difficulty, (difficulty: Difficulty) => difficulty.poses)
   difficulty: Difficulty;
-
-  @ApiProperty({
-    type: () => [SessionCustom],
-    description: 'All session_customs that contain this pose',
-  })
-  @ManyToMany(
-    () => SessionCustom,
-    (sessionCustom: SessionCustom) => sessionCustom.poses,
-    {
-      eager: false,
-    },
-  )
-  @JoinTable({
-    name: 'sessionCustom_pose',
-  })
-  sessionCustoms: SessionCustom[];
 }

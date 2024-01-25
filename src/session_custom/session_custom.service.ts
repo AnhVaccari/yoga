@@ -6,7 +6,7 @@ import {
 import { CreateSessionCustomDto } from './dto/create-session_custom.dto';
 import { UpdateSessionCustomDto } from './dto/update-session_custom.dto';
 import { Repository } from 'typeorm';
-import { SessionCustom } from './entities/session_custom.entity';
+import { Session } from '../session/entities/session.entity';
 import { Pose } from '../poses/entities/pose.entity';
 import { User } from '../user/entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -14,23 +14,23 @@ import { InjectRepository } from '@nestjs/typeorm';
 @Injectable()
 export class SessionCustomService {
   constructor(
-    @InjectRepository(SessionCustom)
-    private sessionCustomRepository: Repository<SessionCustom>,
+    @InjectRepository(Session)
+    private sessionCustomRepository: Repository<Session>,
     @InjectRepository(Pose)
     private poseRepository: Repository<Pose>,
     @InjectRepository(User)
     private userRepository: Repository<User>,
   ) {}
 
-  async getSessionCustoms(userId: number): Promise<SessionCustom[]> {
+  async getSessionCustoms(userId: number): Promise<Session[]> {
     return this.sessionCustomRepository.find({
-      where: { user: { id: userId } },
+      where: { isCustom: true, user: { id: userId } },
     });
   }
 
-  async getSessionCustom(id: number, userId: number): Promise<SessionCustom> {
+  async getSessionCustom(id: number, userId: number): Promise<Session> {
     const sessionCustom = await this.sessionCustomRepository.findOne({
-      where: { id: id, user: { id: userId } },
+      where: { isCustom: true, id: id, user: { id: userId } },
     });
     if (!sessionCustom) {
       throw new NotFoundException('Session Custom not found');
@@ -41,7 +41,7 @@ export class SessionCustomService {
   async createSessionCustom(
     createSessionCustomDto: CreateSessionCustomDto,
     userId: number,
-  ): Promise<SessionCustom> {
+  ): Promise<Session> {
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });
@@ -52,6 +52,7 @@ export class SessionCustomService {
       ...createSessionCustomDto,
       user: user,
       duration: Number(createSessionCustomDto.duration),
+      isCustom: true,
     });
     return this.sessionCustomRepository.save(sessionCustom);
   }
@@ -60,7 +61,7 @@ export class SessionCustomService {
     id: number,
     updateSessionCustomDto: UpdateSessionCustomDto,
     userId: number,
-  ): Promise<SessionCustom> {
+  ): Promise<Session> {
     const sessionCustom = await this.getSessionCustom(id, userId);
 
     const { duration, ...rest } = updateSessionCustomDto;
@@ -69,6 +70,7 @@ export class SessionCustomService {
       ...rest,
       duration: duration ? Number(duration) : sessionCustom.duration,
       poses: undefined,
+      isCustom: true,
     };
 
     await this.sessionCustomRepository.update(
@@ -79,10 +81,7 @@ export class SessionCustomService {
     return this.getSessionCustom(id, userId);
   }
 
-  async removeSessionCustom(
-    id: number,
-    userId: number,
-  ): Promise<SessionCustom> {
+  async removeSessionCustom(id: number, userId: number): Promise<Session> {
     const sessionCustom = await this.getSessionCustom(id, userId);
     await this.sessionCustomRepository.delete({ id: sessionCustom.id });
     return sessionCustom;

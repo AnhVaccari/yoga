@@ -3,7 +3,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { IsNull, Like, MoreThan, Repository } from 'typeorm';
+import { Brackets, IsNull, Repository } from 'typeorm';
 import { Session } from './entities/session.entity';
 import { User } from '../user/entities/user.entity';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
@@ -20,17 +20,20 @@ export class SessionService {
     private launchedSessionRepository: Repository<LaunchedSession>,
   ) {}
   async getSessions(): Promise<Session[]> {
-    return this.sessionRepository.find();
+    return this.sessionRepository.find({
+      where: { isCustom: false },
+    });
   }
   async getSession(id: number): Promise<Session> {
     return this.sessionRepository.findOne({
-      where: { id: id },
+      where: { isCustom: false, id: id },
     });
   }
 
   async getSessionsByDifficulty(difficultyId: number): Promise<Session[]> {
     return this.sessionRepository.find({
       where: {
+        isCustom: false,
         difficulty: { id: difficultyId },
       },
     });
@@ -120,16 +123,34 @@ export class SessionService {
   }
 
   async search(search: string) {
-    const result = await this.sessionRepository.find({
-      where: [
-        { difficulty: { difficulty_level: Like(`%${search}%`) } },
-        { title: Like(`%${search}%`) },
-        { duration: isNaN(Number(search)) ? IsNull() : MoreThan(+search) },
-      ],
-    });
-    return {
-      count: result.length,
-      items: result,
-    };
+    const queryBuilder = this.sessionRepository.createQueryBuilder('session');
+    queryBuilder.leftJoinAndSelect('session.difficulty', 'difficulty');
+    queryBuilder.leftJoinAndSelect('session.poses', 'poses');
+
+    const searchNumber = parseFloat(search);
+    const isNaNSearchNumber = isNaN(searchNumber);
+
+    queryBuilder.where('session.isCustom = :isCustom', { isCustom: false });
+
+    // Utilisation d'une expression pour encapsuler les conditions OR
+    queryBuilder.andWhere(
+      new Brackets((qb) => {
+        // Ajout la condition de recherche de titre
+        qb.where('session.title LIKE :search', { search: `%${search}%` })
+          // Ajout la condition de recherche de niveau de difficulté
+          .orWhere('difficulty.difficulty_level LIKE :search', {
+            search: `%${search}%`,
+          });
+
+        // Ajout la condition de recherche de durée si search est un nombre
+        if (!isNaNSearchNumber) {
+          qb.orWhere('session.duration >= :duration', {
+            duration: searchNumber,
+          });
+        }
+      }),
+    );
+
+    return queryBuilder.getManyAndCount();
   }
 }

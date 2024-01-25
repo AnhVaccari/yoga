@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity({ name: 'category' })
+@Entity({ name: 'Category' })
 export class Category {
   @ApiProperty({
     type: 'number',
@@ -38,6 +38,6 @@ export class Category {
   @ManyToMany(() => Pose, (pose: Pose) => pose.categories, {
     eager: true,
   })
-  @JoinTable({ name: 'pose_category' })
+  @JoinTable({ name: 'Pose_Category' })
   poses: Pose[];
 }

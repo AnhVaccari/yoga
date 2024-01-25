@@ -11,8 +11,8 @@ async function bootstrap() {
     .setDescription(
       'API Yoga - Une API pour accéder à des informations sur les poses de yoga, les catégories, les sessions personnalisées, etc. 🧘‍♂️',
     )
-    .setVersion('1.0')
-    .addTag('yoga')
+    .setVersion('0.1')
+    .addTag('Yoga API')
     .addBearerAuth()
     .build();
 

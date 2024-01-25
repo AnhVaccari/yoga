@@ -10,7 +10,7 @@ import { Pose } from './entities/pose.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
-@ApiTags('yoga')
+@ApiTags('Poses')
 @UseGuards(JwtAuthGuard)
 @Controller('pose')
 export class PosesController {
