@@ -3,7 +3,7 @@ import { Session } from '../../session/entities/session.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity({ name: 'difficulty' })
+@Entity({ name: 'Difficulty' })
 export class Difficulty {
   @ApiProperty({
     type: 'number',

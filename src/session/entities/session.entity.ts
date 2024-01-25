@@ -11,8 +11,9 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../user/entities/user.entity';
 
-@Entity({ name: 'session' })
+@Entity({ name: 'Session' })
 export class Session {
   @ApiProperty({
     type: 'number',
@@ -71,6 +72,22 @@ export class Session {
     eager: true,
     cascade: true,
   })
-  @JoinTable({ name: 'session_pose' })
+  @JoinTable({ name: 'Session_Pose' })
   poses: Pose[];
+
+  @ApiProperty({
+    type: () => Object(User),
+    description: 'User who created an custom session',
+  })
+  @ManyToOne(() => User, (user: User) => user.sessionCustoms, {
+    eager: false,
+  })
+  user: User;
+
+  @ApiProperty({
+    type: 'boolean',
+    description: 'Flag indicating if session is custom',
+  })
+  @Column('boolean')
+  isCustom: boolean;
 }

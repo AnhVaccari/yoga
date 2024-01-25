@@ -10,7 +10,7 @@ import { Difficulty } from './entities/difficulty.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 
 @ApiBearerAuth()
-@ApiTags('yoga')
+@ApiTags('Difficulties')
 @UseGuards(JwtAuthGuard)
 @Controller('difficulty')
 export class DifficultiesController {

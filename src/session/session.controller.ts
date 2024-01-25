@@ -16,7 +16,7 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 
 @ApiBearerAuth()
-@ApiTags('yoga')
+@ApiTags('Session')
 @UseGuards(JwtAuthGuard)
 @Controller('session')
 export class SessionController {

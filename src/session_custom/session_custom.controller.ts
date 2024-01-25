@@ -18,7 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { SessionCustom } from './entities/session_custom.entity';
+import { Session } from '../session/entities/session.entity';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import {
   IUserAuthenticated,
@@ -26,7 +26,7 @@ import {
 } from '../decorators/user-authenticated.decorator';
 
 @ApiBearerAuth()
-@ApiTags('yoga')
+@ApiTags('SessionCustom')
 @UseGuards(JwtAuthGuard)
 @Controller('session-custom')
 export class SessionCustomController {
@@ -37,7 +37,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'List of session customs',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -52,7 +52,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'One session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -70,7 +70,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 201,
     description: 'Create session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -95,7 +95,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'Update session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -122,7 +122,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'Delete session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -140,7 +140,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'Add pose to session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -150,7 +150,7 @@ export class SessionCustomController {
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
     @Param('poseId', ParseIntPipe) poseId: number,
     @UserAuthenticated() user: IUserAuthenticated,
-  ): Promise<SessionCustom> {
+  ): Promise<Session> {
     return this.sessionCustomService.addPoseToSessionCustom(
       sessionCustomId,
       poseId,
@@ -163,7 +163,7 @@ export class SessionCustomController {
   @ApiResponse({
     status: 200,
     description: 'Remove pose from session custom',
-    type: [SessionCustom],
+    type: [Session],
   })
   @ApiResponse({
     status: 401,
@@ -173,7 +173,7 @@ export class SessionCustomController {
     @Param('sessionCustomId', ParseIntPipe) sessionCustomId: number,
     @Param('poseId', ParseIntPipe) poseId: number,
     @UserAuthenticated() user: IUserAuthenticated,
-  ): Promise<SessionCustom> {
+  ): Promise<Session> {
     return this.sessionCustomService.removePoseFromSessionCustom(
       sessionCustomId,
       poseId,

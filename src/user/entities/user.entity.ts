@@ -1,10 +1,10 @@
 import { IsEmail } from 'class-validator';
 import { LaunchedSession } from '../../launched_session/entities/launched_session.entity';
-import { SessionCustom } from '../../session_custom/entities/session_custom.entity';
+import { Session } from '../../session/entities/session.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'User' })
 export class User {
   @ApiProperty({
     type: 'number',
@@ -47,14 +47,13 @@ export class User {
   date_joined: Date;
 
   @ApiProperty({
-    type: () => [SessionCustom],
+    type: () => [Session],
     description: 'Session custom of the user',
   })
-  @OneToMany(
-    () => SessionCustom,
-    (sessionCustom: SessionCustom) => sessionCustom.user,
-  )
-  sessionCustoms: SessionCustom[];
+  @OneToMany(() => Session, (sessionCustom: Session) => sessionCustom.user, {
+    eager: true,
+  })
+  sessionCustoms: Session[];
 
   @ApiProperty({
     type: () => [LaunchedSession],

@@ -3,7 +3,7 @@ import { User } from '../../user/entities/user.entity';
 import { Session } from '../../session/entities/session.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
-@Entity({ name: 'launched_session' })
+@Entity({ name: 'Launched_Session' })
 export class LaunchedSession {
   @ApiProperty({
     format: 'date-time',
