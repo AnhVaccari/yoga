@@ -186,8 +186,8 @@ The file `docs/imports.sql` contains 3 users for example :
 | Username | Password |
 |----------|:--------:|
 | `Ana`    | `azerty` |
-| `John`   |   ` `    |
-| `Marie`  |   ` `    |
+| `John`   |   `nuage`    |
+| `Marie`  |   `soleil`    |
 
 ## Demo API
 
