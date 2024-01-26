@@ -44,6 +44,9 @@ describe('SessionCustomService', () => {
     ];
     const sessionCustomRepositoryMock = {
       find: jest.fn().mockResolvedValue(expectedSessionCustoms),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -79,6 +82,9 @@ describe('SessionCustomService', () => {
     };
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(expectedSessionCustom),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -120,8 +126,12 @@ describe('SessionCustomService', () => {
     const userId = 1;
 
     const sessionCustomRepositoryMock = {
+      findOne: jest.fn().mockReturnValue(createSessionCustomDto),
       create: jest.fn().mockReturnValue(createSessionCustomDto),
       save: jest.fn().mockResolvedValue(createSessionCustomDto),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -149,7 +159,7 @@ describe('SessionCustomService', () => {
       user: expect.objectContaining({ id: userId }),
       isCustom: true,
     });
-    expect(sessionCustomRepositoryMock.save).toHaveBeenCalledWith(
+    expect(sessionCustomRepositoryMock.insert).toHaveBeenCalledWith(
       createSessionCustomDto,
     );
   });
@@ -168,6 +178,9 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
       update: jest.fn().mockResolvedValue({ ...updateSessionCustomDto }),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -218,6 +231,9 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionId }),
       delete: jest.fn().mockResolvedValue({ ...deletedSession }),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -261,6 +277,9 @@ describe('SessionCustomService', () => {
 
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(undefined),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -291,6 +310,9 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -326,7 +348,7 @@ describe('SessionCustomService', () => {
       },
     });
     expect(sessionCustomRepositoryMock.query).toHaveBeenCalledWith(
-      'INSERT INTO sessionCustom_pose (poseId, sessionCustomId) VALUES (?,?)',
+      'INSERT INTO Session_Pose (poseId, sessionId) VALUES (?,?)',
       [poseId, sessionCustomId],
     );
   });
@@ -344,6 +366,9 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue(sessionCustom),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
@@ -379,7 +404,7 @@ describe('SessionCustomService', () => {
       },
     });
     expect(sessionCustomRepositoryMock.query).toHaveBeenCalledWith(
-      'DELETE FROM `sessionCustom_pose` WHERE `poseId` = ? AND `sessionCustomId` = ?',
+      'DELETE FROM `Session_Pose` WHERE `poseId` = ? AND `sessionId` = ?',
       [poseId, sessionCustomId],
     );
   });
@@ -392,6 +417,9 @@ describe('SessionCustomService', () => {
     const sessionCustomRepositoryMock = {
       findOne: jest.fn().mockResolvedValue({ id: sessionCustomId }),
       query: jest.fn().mockResolvedValue({ id: sessionCustomId }),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
     } as unknown as Repository<Session>;
 
     const userRepositoryMock = {
