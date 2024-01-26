@@ -29,6 +29,9 @@ describe('SessionCustomController', () => {
       update: jest.fn(),
       softDelete: jest.fn(),
       save: jest.fn(),
+      insert: jest
+        .fn()
+        .mockImplementation(() => Promise.resolve({ raw: { insertId: 1 } })),
       query: jest.fn(),
     } as unknown as Repository<Session>;
 
@@ -165,9 +168,13 @@ describe('SessionCustomController', () => {
       .fn()
       .mockResolvedValue({ ...createSessionCustomDto });
 
-    sessionCustomRepositoryMock.save = jest
+    sessionCustomRepositoryMock.findOne = jest
       .fn()
-      .mockResolvedValue({ ...createSessionCustomDto, id: 1 });
+      .mockResolvedValue({ ...createSessionCustomDto });
+
+    sessionCustomRepositoryMock.insert = jest
+      .fn()
+      .mockResolvedValue({ raw: { insertId: 1 } });
 
     const result = await sessionCustomController.create(
       createSessionCustomDto,
@@ -175,14 +182,7 @@ describe('SessionCustomController', () => {
     );
 
     expect(result).toBeDefined();
-    expect(result).toEqual(
-      expect.objectContaining({
-        id: expect.any(Number),
-        title: expect.any(String),
-        description: expect.any(String),
-        duration: expect.any(Number),
-      }),
-    );
+    expect(result).toEqual(createSessionCustomDto);
   });
 
   it('should update a session_custom', async () => {
@@ -381,7 +381,7 @@ describe('SessionCustomController', () => {
     expect(result.poses).not.toContainEqual(poseToRemove);
 
     expect(sessionCustomRepositoryMock.query).toHaveBeenCalledWith(
-      'DELETE FROM `sessionCustom_pose` WHERE `poseId` = ? AND `sessionCustomId` = ?',
+      'DELETE FROM `Session_Pose` WHERE `poseId` = ? AND `sessionId` = ?',
       [poseIdToRemove, existingSessionCustom.id],
     );
   });

@@ -54,7 +54,8 @@ export class SessionCustomService {
       duration: Number(createSessionCustomDto.duration),
       isCustom: true,
     });
-    return this.sessionCustomRepository.save(sessionCustom);
+    const insert = await this.sessionCustomRepository.insert(sessionCustom);
+    return this.getSessionCustom(insert.raw.insertId, userId);
   }
 
   async updateSessionCustom(
@@ -111,7 +112,7 @@ export class SessionCustomService {
     sessionCustom.poses.push(pose);
 
     await this.sessionCustomRepository.query(
-      'INSERT INTO sessionCustom_pose (poseId, sessionCustomId) VALUES (?,?)',
+      'INSERT INTO Session_Pose (poseId, sessionId) VALUES (?,?)',
       [poseId, sessionCustomId],
     );
 
@@ -142,7 +143,7 @@ export class SessionCustomService {
     sessionCustom.poses = sessionCustom.poses.filter((p) => p.id !== poseId);
 
     await this.sessionCustomRepository.query(
-      'DELETE FROM `sessionCustom_pose` WHERE `poseId` = ? AND `sessionCustomId` = ?',
+      'DELETE FROM `Session_Pose` WHERE `poseId` = ? AND `sessionId` = ?',
       [poseId, sessionCustomId],
     );
 
