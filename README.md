@@ -193,7 +193,7 @@ The file `docs/sample.sql` contains 3 users for example :
 
 ## Demo API
 
-- [https://render.com](https://render.com)
+- [https://yoga-api-xdpv.onrender.com/docs](https://yoga-api-xdpv.onrender.com/docs)
 
 ## Contributing
 
