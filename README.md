@@ -5,6 +5,7 @@
     <a href="https://github.com/AnhVaccari/yoga/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/AnhVaccari/yoga"></a>
     <a href="https://www.linkedin.com/in/anh-vaccari-dev/"><img alt="LinkedIn Profile" src="https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white"></a>
     <a href="https://github.com/AnhVaccari/yoga/blob/master/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
+    [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AnhVaccari_yoga&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AnhVaccari_yoga)
   </div>
 </div>
 
@@ -15,8 +16,8 @@ Yoga Training App is a dynamic RESTful API designed for building yoga-focused ap
 ## API Endpoints
 
 ### Swagger UI
-- `GET /docs`: display all endpoints, documentation and playground this API.
 
+- `GET /docs`: display all endpoints, documentation and playground this API.
 
 ### Categories
 
@@ -69,21 +70,21 @@ The backend database supports the API with structured tables that hold data rela
 
 ## Current Features
 
-- [X] **User Authentication**: Securely manage user sessions with a token-based authentication system, allowing users to log in to their accounts.
+- [x] **User Authentication**: Securely manage user sessions with a token-based authentication system, allowing users to log in to their accounts.
 
-- [X] **User Profile Management**: Users can retrieve their profile data after logging in, providing a personalized experience.
+- [x] **User Profile Management**: Users can retrieve their profile data after logging in, providing a personalized experience.
 
-- [X] **Yoga Session Tracking**: Users can start and stop yoga sessions, with the API recording the timing of each session.
+- [x] **Yoga Session Tracking**: Users can start and stop yoga sessions, with the API recording the timing of each session.
 
-- [X] **Custom Yoga Sessions**: Create and manage custom yoga sessions by adding specific poses to a session.
+- [x] **Custom Yoga Sessions**: Create and manage custom yoga sessions by adding specific poses to a session.
 
-- [X] **Yoga Pose Directory**: Access a library of yoga poses complete with details like Sanskrit names, English names, descriptions, benefits, and associated images.
+- [x] **Yoga Pose Directory**: Access a library of yoga poses complete with details like Sanskrit names, English names, descriptions, benefits, and associated images.
 
-- [X] **Session and Pose Difficulty Levels**: Retrieve the difficulty level of each session or pose to tailor the yoga practice to different skill levels.
+- [x] **Session and Pose Difficulty Levels**: Retrieve the difficulty level of each session or pose to tailor the yoga practice to different skill levels.
 
-- [X] **Category Management**: Organize yoga content by categories, such as Core Yoga or Seated Yoga.
+- [x] **Category Management**: Organize yoga content by categories, such as Core Yoga or Seated Yoga.
 
-- [X] **Search Functionality**: Search for yoga sessions using various filters to find the perfect session for the moment.
+- [x] **Search Functionality**: Search for yoga sessions using various filters to find the perfect session for the moment.
 
 ## Upcoming Features
 
@@ -94,7 +95,6 @@ The backend database supports the API with structured tables that hold data rela
 - [ ] A reminder system ensuring users maintain consistency in their yoga practice.
 
 - [ ] A more comprehensive and user-friendly interface for easy navigation and a superior user experience.
-
 
 ## Tech Stack
 
@@ -122,6 +122,7 @@ cd yoga-flutter-app
 ```
 
 ## 2. Running the app in Docker (if you use Docker)
+
 There are three containers in the configuration :
 
 - **app**: The app container node.js version 18 - port 3000
@@ -151,6 +152,7 @@ And start the app container
 ```shell
   cp .env.example .env
 ```
+
 And change the value in the file `.env` to your configuration database
 
 ## 5. Running the local app (skip if you use Docker)
@@ -181,13 +183,13 @@ $ npm run test:cov
 
 ## List of Users for the API
 
-The file `docs/imports.sql` contains 3 users for example : 
+The file `docs/imports.sql` contains 3 users for example :
 
 | Username | Password |
-|----------|:--------:|
+| -------- | :------: |
 | `Ana`    | `azerty` |
-| `John`   |   `nuage`    |
-| `Marie`  |   `soleil`    |
+| `John`   | `nuage`  |
+| `Marie`  | `soleil` |
 
 ## Demo API
 
