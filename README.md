@@ -5,7 +5,7 @@
     <a href="https://github.com/AnhVaccari/yoga/stargazers"><img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/AnhVaccari/yoga"></a>
     <a href="https://www.linkedin.com/in/anh-vaccari-dev/"><img alt="LinkedIn Profile" src="https://img.shields.io/badge/LinkedIn-0077B5?logo=linkedin&logoColor=white"></a>
     <a href="https://github.com/AnhVaccari/yoga/blob/master/LICENSE.md"><img alt="License" src="https://img.shields.io/badge/License-MIT-yellow.svg"></a>
-    [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=AnhVaccari_yoga&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=AnhVaccari_yoga)
+    <a href="https://sonarcloud.io/summary/new_code?id=AnhVaccari_yoga"><img alt="Quality Gate Status" src="https://sonarcloud.io/api/project_badges/measure?project=AnhVaccari_yoga&metric=alert_status"></a>
   </div>
 </div>
 
