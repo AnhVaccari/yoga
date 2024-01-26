@@ -145,7 +145,7 @@ And start the app container
 ### 3. Create your database
 
 - Create a new database in your MySQL locally (or in the interface `adminer` in Docker) (for example: `yoga-app`)
-- And import the file SQL `docs/import.sql` in your database
+- And import the file SQL `docs/sample.sql` in your database
 
 ### 4. Configure .env
 
@@ -183,7 +183,7 @@ $ npm run test:cov
 
 ## List of Users for the API
 
-The file `docs/imports.sql` contains 3 users for example :
+The file `docs/sample.sql` contains 3 users for example :
 
 | Username | Password |
 | -------- | :------: |
