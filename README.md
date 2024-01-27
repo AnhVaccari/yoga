@@ -103,7 +103,7 @@ The backend database supports the API with structured tables that hold data rela
 - [TypeORM](https://typeorm.io) - orm
 - [MySQL](https://www.mysql.com) - database
 - [Render](https://render.com) – hosting node
-- [Filess](https://filess.io) – hosting mysql
+- [Aiven](https://aiven.io) – hosting mysql
 
 ## Getting Started
 
