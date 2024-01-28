@@ -5,10 +5,9 @@ import { User } from '../user/entities/user.entity';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
 import { Session } from './entities/session.entity';
 import { SessionService } from './session.service';
-import { Pose } from '../poses/entities/pose.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([LaunchedSession, Session, User, Pose])],
+  imports: [TypeOrmModule.forFeature([LaunchedSession, Session, User])],
   controllers: [SessionController],
   providers: [SessionService],
 })

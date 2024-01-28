@@ -122,36 +122,4 @@ export class SessionController {
   ) {
     return this.sessionService.stopSession(+sessionId, user.userId);
   }
-
-  @Get('statistics')
-  @ApiOperation({ summary: 'Get pratice statistics' })
-  @ApiResponse({
-    status: 200,
-    description: 'Pratice statistics',
-    type: Object,
-  })
-  @ApiResponse({
-    status: 401,
-    description: 'Unauthorized',
-  })
-  async getStatistics(@UserAuthenticated() user: IUserAuthenticated) {
-    const totalSessionCount = await this.sessionService.getTotalSessionCount(
-      user.userId,
-    );
-
-    const averageSessionDuration =
-      await this.sessionService.getAverageSessionDuration(user.userId);
-
-    const mostPracticedPoses = await this.sessionService.getMostPracticedPoses(
-      user.userId,
-      5,
-    );
-
-    return {
-      userId: user.userId,
-      totalSessionCount,
-      averageSessionDuration,
-      mostPracticedPoses,
-    };
-  }
 }

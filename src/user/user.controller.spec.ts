@@ -5,6 +5,8 @@ import { User } from './entities/user.entity';
 import { ConflictException, NotFoundException } from '@nestjs/common';
 import * as bcrypt from 'bcrypt';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
+import { Pose } from '../poses/entities/pose.entity';
+import { Session } from '../session/entities/session.entity';
 
 jest
   .spyOn(bcrypt, 'hash')
@@ -17,6 +19,8 @@ jest
 describe('UserController', () => {
   let userRepositoryMock: Repository<User>;
   let launchedSessionRepositoryMock: Repository<LaunchedSession>;
+  let poseRepositoryMock: Repository<Pose>;
+  let sessionRepositoryMock: Repository<Session>;
 
   beforeEach(() => {
     const expectedUser = {
@@ -36,6 +40,14 @@ describe('UserController', () => {
     launchedSessionRepositoryMock = {
       findOne: jest.fn(),
     } as unknown as Repository<LaunchedSession>;
+
+    poseRepositoryMock = {
+      find: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    sessionRepositoryMock = {
+      find: jest.fn().mockResolvedValue([]),
+    } as unknown as Repository<Session>;
   });
 
   // UserController can get user profile successfully
@@ -44,6 +56,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
@@ -69,6 +83,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
@@ -88,6 +104,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const createUserDto = {
@@ -118,6 +136,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const user = { userId: 1, username: 'john' };
@@ -134,6 +154,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const createUserDto = {
@@ -155,6 +177,8 @@ describe('UserController', () => {
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
     const userController = new UserController(userService);
     const createUserDto = {

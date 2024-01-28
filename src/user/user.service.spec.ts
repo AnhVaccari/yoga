@@ -3,6 +3,8 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
+import { Session } from '../session/entities/session.entity';
+import { Pose } from '../poses/entities/pose.entity';
 
 jest
   .spyOn(bcrypt, 'hash')
@@ -28,12 +30,22 @@ describe('UserService', () => {
       findOne: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
 
+    const poseRepositoryMock = {
+      find: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionRepositoryMock = {
+      find: jest.fn().mockResolvedValue([]),
+    } as unknown as Repository<Session>;
+
     launchedSessionRepositoryMock = {
       findOne: jest.fn(),
     } as unknown as Repository<LaunchedSession>;
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
 
     // Act
@@ -69,9 +81,20 @@ describe('UserService', () => {
       create: jest.fn().mockReturnValue(expectedUser),
       save: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionRepositoryMock = {
+      find: jest.fn().mockResolvedValue([]),
+    } as unknown as Repository<Session>;
+
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
 
     // Act
@@ -106,9 +129,20 @@ describe('UserService', () => {
       update: jest.fn(),
       findOne: jest.fn().mockResolvedValue(expectedUser),
     } as unknown as Repository<User>;
+
+    const poseRepositoryMock = {
+      find: jest.fn(),
+    } as unknown as Repository<Pose>;
+
+    const sessionRepositoryMock = {
+      find: jest.fn().mockResolvedValue([]),
+    } as unknown as Repository<Session>;
+
     const userService = new UserService(
       userRepositoryMock,
       launchedSessionRepositoryMock,
+      poseRepositoryMock,
+      sessionRepositoryMock,
     );
 
     // Act

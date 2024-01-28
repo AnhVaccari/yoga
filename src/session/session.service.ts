@@ -8,7 +8,6 @@ import { Session } from './entities/session.entity';
 import { User } from '../user/entities/user.entity';
 import { LaunchedSession } from '../launched_session/entities/launched_session.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Pose } from '../poses/entities/pose.entity';
 
 @Injectable()
 export class SessionService {
@@ -19,8 +18,6 @@ export class SessionService {
     private userRepository: Repository<User>,
     @InjectRepository(LaunchedSession)
     private launchedSessionRepository: Repository<LaunchedSession>,
-    @InjectRepository(Pose)
-    private poseRepository: Repository<Pose>,
   ) {}
   async getSessions(): Promise<Session[]> {
     return this.sessionRepository.find({
@@ -155,40 +152,5 @@ export class SessionService {
     );
 
     return queryBuilder.getManyAndCount();
-  }
-
-  async getTotalSessionCount(userId: number): Promise<number> {
-    return this.sessionRepository.count({
-      where: { user: { id: userId } },
-    });
-  }
-
-  async getAverageSessionDuration(userId: number): Promise<number> {
-    const { sum, count } = await this.sessionRepository
-      .createQueryBuilder('session')
-      .select('SUM(session.duration)', 'sum')
-      .addSelect('COUNT(session.id)', 'count')
-      .where('session.user.id = :userId', { userId })
-      .getRawOne();
-
-    return count > 0 ? sum / count : 0;
-  }
-
-  async getMostPracticedPoses(userId: number, topN: number): Promise<any[]> {
-    const qb = this.poseRepository.createQueryBuilder('pose');
-
-    qb.leftJoin('pose.sessions', 'session')
-      .leftJoin('session.user', 'user')
-      .where('user.id = :userId', { userId })
-      .select('pose.id', 'id')
-      .addSelect('pose.sanskrit_name', 'sanskrit_name')
-      .addSelect('pose.english_name', 'english_name')
-      .addSelect('COUNT(session.id)', 'sessionCount')
-      .groupBy('pose.id')
-      .orderBy('sessionCount', 'DESC')
-      .limit(topN);
-
-    const mostPracticedPoses = await qb.getRawMany();
-    return mostPracticedPoses;
   }
 }

@@ -113,4 +113,37 @@ export class UserController {
   async isSessionActive(@UserAuthenticated() user: IUserAuthenticated) {
     return this.userService.isSessionActive(user.userId);
   }
+
+  @Get('statistics')
+  @ApiOperation({ summary: 'Get pratice statistics' })
+  @ApiResponse({
+    status: 200,
+    description: 'Pratice statistics',
+    type: Object,
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Unauthorized',
+  })
+  async getStatistics(@UserAuthenticated() user: IUserAuthenticated) {
+    const totalLaunchedSessionCount =
+      await this.userService.getTotalSessionCount(user.userId);
+
+    const averageSessionDuration =
+      await this.userService.getAverageDailySessionDuration(user.userId);
+
+    const mostPracticedPoses = await this.userService.getMostPracticedPoses(
+      user.userId,
+      5,
+    );
+    console.log('1', totalLaunchedSessionCount);
+    console.log('2', averageSessionDuration);
+    console.log('3', mostPracticedPoses);
+
+    return {
+      totalLaunchedSessionCount,
+      averageSessionDuration,
+      mostPracticedPoses,
+    };
+  }
 }
