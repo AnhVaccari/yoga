@@ -296,7 +296,7 @@ describe('SessionService', () => {
 
     expect(result).toEqual(expectedCount);
     expect(sessionRepositoryMock.count).toHaveBeenCalledWith({
-      where: { isCustom: false, user: { id: userId } },
+      where: { user: { id: userId } },
     });
   });
 

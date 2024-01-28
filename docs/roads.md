@@ -24,5 +24,5 @@
 | `/session/:sessionId/stop`                      | `POST`      | SessionController       | `stopSession`             | Stop a session                 |
 | `/pose/difficulty/:id`                          | `GET`       | PoseController          | `getPosesByDifficulty`    | Get poses by difficulty        |
 | `/session/difficulty/:id`                       | `GET`       | SessionController       | `getSessionsByDifficulty` | Get sessions by difficulty     |
-| `/session/search`                               | `GET`       | SessionController       | `search`                  | Search session by term         |
+| `/session/search`                               | `GET`       | SessionController       | `search`                  | Search for session by keyword  |
 | `/session/statistics`                           | `GET`       | SessionController       | `getStatistics`           | Get statistics                 |
