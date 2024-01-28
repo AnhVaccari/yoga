@@ -108,18 +108,18 @@ CREATE TABLE `User` (
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 INSERT INTO `Category` (`id`, `category_name`, `description`) VALUES
-(1, 'Core Yoga', 'Engage your abdominal muscles with core yoga poses that build a strong and stable center like Boat Pose, Dolphin Pose and Side Plank Pose.'),
-(2, 'Seated Yoga', ' Yoga practice with seated poses that help you find better alignment, increase your flexibility, and relieve lower back pain and discomfort. Tone the belly, massage your internal organs, and relieve lower back pain in these seated yoga poses. '),
-(3, 'Strengthening Yoga', 'Work and tone your entire body with strengthening yoga poses like Chair Pose, Warrior I Pose and Extended Side Angle Pose.'),
-(4, 'Chest Opening Yoga', 'Open your heart and shoulders in chest opening yoga poses like Camel Pose, Fish Pose and Wild Thing.'),
-(5, 'Backbend Yoga', 'Discover the powerful effects of yoga backbends with step-by-step instructions, sequences, and expert advice to keep your practice pain-free.'),
-(6, 'Forward Bend Yoga', 'Learn how to work stiff muscles safely, promote lower-body flexibility, and find correct alignment with forward bend yoga poses.'),
-(7, 'Hip Opening Yoga', 'Loosen tight hips, improve your range of motion and circulation, alleviate back pain and more in these hip-opening yoga poses.'),
-(8, 'Standing Yoga', 'Develop strength and stability in your standing poses, and feel the benefits throughout your practice. Build strength and set the foundation for a safe yoga practice. '),
-(9, 'Restorative Yoga', 'Restorative yoga focuses on winding down after a long day and relaxing your mind. At its core, this style focuses on body relaxation. You spend more time in fewer postures throughout the class. Many of the poses are modified to be easier and more relaxing. Restorative yoga also helps to cleanse and free your mind.'),
-(10, 'Arm Balance Yoga', 'Move past fear, build better balance, and strengthen your body with arm balance yoga poses like Crane Pose, Plank Pose, Firefly Pose amd more.'),
-(11, 'Balancing Yoga', 'Build a strong foundation for your asana practice with these balancing yoga poses. Get step-by-step instructions and reap the benefits.'),
-(12, 'Inversion Yoga', 'Master inversions—overcome fear and discover how to defy gravity with these step-by-step instructions. Learn how to prepare for and stay safe in inversion yoga poses.');
+(1, 'Yoga du Core', 'Renforcez vos muscles abdominaux avec des poses de yoga du core qui construisent un centre fort et stable comme la Pose du Bateau, la Pose du Dauphin et la Pose de la Planche Latérale.'),
+(2, 'Yoga Assis', 'Pratiquez le yoga avec des poses assises qui vous aident à trouver une meilleure alignement, augmenter votre flexibilité, et soulager les douleurs et inconforts du bas du dos. Tonifiez le ventre, massez vos organes internes, et soulagez les douleurs du bas du dos avec ces poses de yoga assises.'),
+(3, 'Yoga Renforçant', 'Travaillez et tonifiez votre corps entier avec des poses de yoga renforçantes comme la Pose de la Chaise, la Pose du Guerrier I et la Pose de l\'Angle Latéral Étendu.'),
+(4, 'Yoga d\'Ouverture de la Poitrine', 'Ouvrez votre cœur et vos épaules dans des poses de yoga d\'ouverture de la poitrine comme la Pose du Chameau, la Pose du Poisson et la Pose Sauvage.'),
+(5, 'Yoga de Cambrure', 'Découvrez les effets puissants des cambrures de yoga avec des instructions étape par étape, des séquences, et des conseils d\'experts pour maintenir votre pratique sans douleur.'),
+(6, 'Yoga de Flexion Avant', 'Apprenez à travailler en toute sécurité les muscles raides, à promouvoir la flexibilité du bas du corps, et à trouver le bon alignement avec des poses de yoga de flexion avant.'),
+(7, 'Yoga d\'Ouverture des Hanches', 'Détendez les hanches serrées, améliorez votre amplitude de mouvement et votre circulation, soulagez les douleurs dorsales et plus encore dans ces poses de yoga d\'ouverture des hanches.'),
+(8, 'Yoga Debout', 'Développez la force et la stabilité dans vos poses debout, et ressentez les bienfaits tout au long de votre pratique. Construisez la force et posez les fondations pour une pratique du yoga en toute sécurité.'),
+(9, 'Yoga Restauratif', 'Le yoga restauratif se concentre sur la détente après une longue journée et la relaxation de votre esprit. Au cœur de ce style, l\'accent est mis sur la relaxation du corps. Vous passez plus de temps dans moins de postures pendant la classe. Beaucoup de poses sont modifiées pour être plus faciles et plus relaxantes. Le yoga restauratif aide également à purifier et libérer votre esprit.'),
+(10, 'Yoga d\'Équilibre sur les Bras', 'Dépassez la peur, améliorez l\'équilibre et renforcez votre corps avec des poses de yoga d\'équilibre sur les bras comme la Pose de la Grue, la Pose de la Planche, la Pose de la Luciole et plus encore.'),
+(11, 'Yoga d\'Équilibre', 'Construisez une fondation solide pour votre pratique des asanas avec ces poses de yoga d\'équilibre. Obtenez des instructions étape par étape et récoltez les bienfaits.'),
+(12, 'Yoga d\'Inversion', 'Maîtrisez les inversions - surmontez la peur et découvrez comment défier la gravité avec ces instructions étape par étape. Apprenez à vous préparer et à rester en sécurité dans les poses de yoga d\'inversion.');
 
 INSERT INTO `Difficulty` (`id`, `difficulty_level`) VALUES
 (1, 'Débutante'),
