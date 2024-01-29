@@ -86,6 +86,10 @@ The backend database supports the API with structured tables that hold data rela
 
 - [x] **Search Functionality**: Search for yoga sessions using various filters to find the perfect session for the moment.
 
+- [x] **User History**: Retrieve a list of sessions launched by the user.
+
+- [x] **User Statistics**: Some statistics such as average session length, total number of sessions and top 5 most popular poses
+
 ## Upcoming Features
 
 - [ ] Expanding search functionality to include additional criteria for a refined session search experience.
@@ -95,6 +99,10 @@ The backend database supports the API with structured tables that hold data rela
 - [ ] A reminder system ensuring users maintain consistency in their yoga practice.
 
 - [ ] A more comprehensive and user-friendly interface for easy navigation and a superior user experience.
+
+- [ ] More advanced and accurate statistics for the user.
+
+- [ ] A more detailed yoga pose description.
 
 ## Tech Stack
 
