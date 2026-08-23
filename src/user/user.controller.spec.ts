@@ -1,3 +1,4 @@
+import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 import { UserController } from './user.controller';
 import { Repository } from 'typeorm';
@@ -108,12 +109,15 @@ describe('UserController', () => {
       sessionRepositoryMock,
     );
     const userController = new UserController(userService);
-    const createUserDto = {
-      username: 'jane',
+    // Une instance réelle du DTO, pas un objet littéral : class-validator lit
+    // ses contraintes sur le constructeur, et un littéral les contourne toutes.
+    // username respecte @Length(10, 50), password @Length(8, 15).
+    const createUserDto = Object.assign(new CreateUserDto(), {
+      username: 'jane.du.yoga',
       email: 'jane@example.com',
       password: 'password123',
       date_joined: new Date(),
-    };
+    });
 
     // Act
     const result = await userController.create(createUserDto);

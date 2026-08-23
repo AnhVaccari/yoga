@@ -21,7 +21,7 @@ export class AuthController {
   async login(@Body() user: UserLoginDto) {
     try {
       return await this.authService.login(user);
-    } catch (error) {
+    } catch {
       throw new HttpException('Login failed', HttpStatus.UNAUTHORIZED);
     }
   }

@@ -32,6 +32,10 @@ export class CreateUserDto {
   password: string;
 
   @IsDate()
-  @ApiProperty({ type: 'date', description: 'Date_joined of the user' })
+  @ApiProperty({
+    type: 'string',
+    format: 'date-time',
+    description: 'Date_joined of the user',
+  })
   date_joined?: Date;
 }
