@@ -2,7 +2,7 @@ on: push
 name: CI
 jobs:
   build:
-    name: Build, Test and Analyze
+    name: Build and Test
     runs-on: ubuntu-latest
     steps:
       - name: Load repository
@@ -23,11 +23,3 @@ jobs:
         run: |
           npm run test-e2e:ci
           npm run test:ci
-      - name: Fix code coverage paths
-        working-directory: ./coverage
-        run: sed -i 's/\/home\/runner\/work\/yoga\/yoga\//\/github\/workspace\//g' lcov.info
-      - name: Analyze with SonarCloud
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
